@@ -1,0 +1,12 @@
+C:\DEV\ankaninstalker\AnkaninStalker\bin\Release\AnkaninStalker.exe.config
+C:\DEV\ankaninstalker\AnkaninStalker\bin\Release\AnkaninStalker.exe
+C:\DEV\ankaninstalker\AnkaninStalker\bin\Release\AnkaninStalker.pdb
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\ResolveAssemblyReference.cache
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\AnkaninStalker.Form1.resources
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\AnkaninStalker.Properties.Resources.resources
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\AnkaninStalker.Setting.resources
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\AnkaninStalker.Version.resources
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\GenerateResource.read.1.tlog
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\GenerateResource.write.1.tlog
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\AnkaninStalker.exe
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Release\AnkaninStalker.pdb

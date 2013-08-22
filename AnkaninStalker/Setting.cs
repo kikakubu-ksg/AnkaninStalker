@@ -15,6 +15,7 @@ namespace AnkaninStalker
         private bool _topMost;
         private bool _viewName;
         private bool _viewMail;
+        private string _strConfig;
 
         public Form1 parentForm
         {
@@ -124,6 +125,20 @@ namespace AnkaninStalker
             {
                 _viewMail = value;
                 this.checkBox_viewmail.Checked = value;
+            }
+        }
+        public string strConfig
+        {
+            get
+            {
+
+                return _strConfig;
+
+            }
+            set
+            {
+                _strConfig = value;
+                this.textBox_config.Text = value;
             }
         }
 

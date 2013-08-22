@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
 using System.Net;
+using System.Configuration;
 
 namespace AnkaninStalker
 {
@@ -46,6 +47,10 @@ namespace AnkaninStalker
                  System.Diagnostics.FileVersionInfo.GetVersionInfo(
                  System.Reflection.Assembly.GetExecutingAssembly().Location);
             this.VersionInstanse.strVersion = ver.ProductVersion;
+
+            // コンフィグファイルパス
+            this.SettingInstanse.strConfig = ConfigurationManager.OpenExeConfiguration(
+                ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
 
 
             // 設定値割り当て
@@ -546,7 +551,7 @@ namespace AnkaninStalker
             }
             label_linenum.Text = line.ToString() + "行目";
 
-            // 右と左は対応しかねる。
+            // 右と左は対応しかねる。重くなるの勘弁
 
         }
 
@@ -578,3 +583,7 @@ namespace AnkaninStalker
 //・talk機能
 //・名前・メ欄ストーカー機能
 //・安価人の冒険
+//・user.configファイルパス表示 OK
+//・更新時間のconfig化
+//・統計情報
+//・収納機能

@@ -44,6 +44,8 @@
             this.checkBox_topmost = new System.Windows.Forms.CheckBox();
             this.checkBox_viewname = new System.Windows.Forms.CheckBox();
             this.checkBox_viewmail = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox_config = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -132,7 +134,7 @@
             // 
             // button_Setting_OK
             // 
-            this.button_Setting_OK.Location = new System.Drawing.Point(259, 176);
+            this.button_Setting_OK.Location = new System.Drawing.Point(259, 272);
             this.button_Setting_OK.Name = "button_Setting_OK";
             this.button_Setting_OK.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_OK.TabIndex = 10;
@@ -142,7 +144,7 @@
             // 
             // button_Setting_CNS
             // 
-            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 176);
+            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 272);
             this.button_Setting_CNS.Name = "button_Setting_CNS";
             this.button_Setting_CNS.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_CNS.TabIndex = 11;
@@ -180,11 +182,31 @@
             this.checkBox_viewmail.Text = "メール欄を表示する";
             this.checkBox_viewmail.UseVisualStyleBackColor = true;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 211);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(114, 12);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "コンフィグファイルの場所";
+            // 
+            // textBox_config
+            // 
+            this.textBox_config.Location = new System.Drawing.Point(9, 227);
+            this.textBox_config.Multiline = true;
+            this.textBox_config.Name = "textBox_config";
+            this.textBox_config.ReadOnly = true;
+            this.textBox_config.Size = new System.Drawing.Size(409, 24);
+            this.textBox_config.TabIndex = 16;
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 211);
+            this.ClientSize = new System.Drawing.Size(430, 307);
+            this.Controls.Add(this.textBox_config);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.checkBox_viewmail);
             this.Controls.Add(this.checkBox_viewname);
             this.Controls.Add(this.checkBox_topmost);
@@ -227,5 +249,7 @@
         private System.Windows.Forms.CheckBox checkBox_topmost;
         private System.Windows.Forms.CheckBox checkBox_viewname;
         private System.Windows.Forms.CheckBox checkBox_viewmail;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBox_config;
     }
 }

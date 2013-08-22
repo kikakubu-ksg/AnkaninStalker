@@ -5,6 +5,8 @@ namespace AnkaninStalker
 {
     public partial class Version : Form
     {
+        public string _strVersion;
+
         public Version()
         {
             InitializeComponent();
@@ -24,5 +26,20 @@ namespace AnkaninStalker
         {
 
         }
+        public string strVersion
+        {
+            get
+            {
+
+                return _strVersion;
+
+            }
+            set
+            {
+                _strVersion = value;
+                this.label_version.Text = value;
+            }
+        }
+
     }
 }

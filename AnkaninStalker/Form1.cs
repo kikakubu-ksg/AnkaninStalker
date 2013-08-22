@@ -41,6 +41,13 @@ namespace AnkaninStalker
 
             this.SettingInstanse.parentForm = this;
 
+            // バージョン情報
+            System.Diagnostics.FileVersionInfo ver =
+                 System.Diagnostics.FileVersionInfo.GetVersionInfo(
+                 System.Reflection.Assembly.GetExecutingAssembly().Location);
+            this.VersionInstanse.strVersion = ver.ProductVersion;
+
+
             // 設定値割り当て
             this.SettingInstanse.strThread = Properties.Settings.Default.Thread;
             this.SettingInstanse.strID = Properties.Settings.Default.ID;

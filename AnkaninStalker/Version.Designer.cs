@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Version));
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label_version = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -51,8 +52,18 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(231, 32);
             this.label1.TabIndex = 1;
-            this.label1.Text = "なんでも実況V 安価人ストーカー\r\nバージョン 0.1.0";
+            this.label1.Text = "なんでも実況V 安価人ストーカー\r\nバージョン ";
             this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label_version
+            // 
+            this.label_version.AutoSize = true;
+            this.label_version.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_version.Location = new System.Drawing.Point(135, 79);
+            this.label_version.Name = "label_version";
+            this.label_version.Size = new System.Drawing.Size(55, 13);
+            this.label_version.TabIndex = 2;
+            this.label_version.Text = "X.X.X.X";
             // 
             // Version
             // 
@@ -60,6 +71,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(341, 172);
             this.ControlBox = false;
+            this.Controls.Add(this.label_version);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -77,5 +89,6 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label_version;
     }
 }

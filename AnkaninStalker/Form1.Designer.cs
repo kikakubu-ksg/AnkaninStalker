@@ -49,13 +49,14 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.label_linenum = new System.Windows.Forms.Label();
+            this.button_save = new System.Windows.Forms.Button();
+            this.button_load = new System.Windows.Forms.Button();
+            this.button_line = new System.Windows.Forms.Button();
             this.button_clear = new System.Windows.Forms.Button();
             this.button_wrap = new System.Windows.Forms.Button();
-            this.button_line = new System.Windows.Forms.Button();
-            this.button_load = new System.Windows.Forms.Button();
-            this.button_save = new System.Windows.Forms.Button();
-            this.label_linenum = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.panel_info.SuspendLayout();
             this.panel_error.SuspendLayout();
@@ -264,6 +265,76 @@
             this.tabPage2.Text = "メモ帳";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label_linenum
+            // 
+            this.label_linenum.AutoSize = true;
+            this.label_linenum.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_linenum.Location = new System.Drawing.Point(7, 10);
+            this.label_linenum.Name = "label_linenum";
+            this.label_linenum.Size = new System.Drawing.Size(35, 12);
+            this.label_linenum.TabIndex = 6;
+            this.label_linenum.Text = "0行目";
+            // 
+            // button_save
+            // 
+            this.button_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_save.BackgroundImage = global::AnkaninStalker.Properties.Resources.save;
+            this.button_save.Location = new System.Drawing.Point(152, 3);
+            this.button_save.Name = "button_save";
+            this.button_save.Size = new System.Drawing.Size(24, 24);
+            this.button_save.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.button_save, "メモを保存します（Ctrl+S）");
+            this.button_save.UseVisualStyleBackColor = true;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
+            // 
+            // button_load
+            // 
+            this.button_load.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_load.BackgroundImage = global::AnkaninStalker.Properties.Resources.load;
+            this.button_load.Location = new System.Drawing.Point(176, 3);
+            this.button_load.Name = "button_load";
+            this.button_load.Size = new System.Drawing.Size(24, 24);
+            this.button_load.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.button_load, "メモをロードします（Ctrl+L）");
+            this.button_load.UseVisualStyleBackColor = true;
+            this.button_load.Click += new System.EventHandler(this.button_load_Click);
+            // 
+            // button_line
+            // 
+            this.button_line.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_line.BackgroundImage = global::AnkaninStalker.Properties.Resources.line;
+            this.button_line.Location = new System.Drawing.Point(224, 3);
+            this.button_line.Name = "button_line";
+            this.button_line.Size = new System.Drawing.Size(24, 24);
+            this.button_line.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.button_line, "水平線を追加します（Ctrl+-）");
+            this.button_line.UseVisualStyleBackColor = true;
+            this.button_line.Click += new System.EventHandler(this.button_line_Click);
+            // 
+            // button_clear
+            // 
+            this.button_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_clear.BackgroundImage = global::AnkaninStalker.Properties.Resources.clear;
+            this.button_clear.Location = new System.Drawing.Point(248, 3);
+            this.button_clear.Name = "button_clear";
+            this.button_clear.Size = new System.Drawing.Size(24, 24);
+            this.button_clear.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.button_clear, "メモをクリアします（Ctrl+Del）");
+            this.button_clear.UseVisualStyleBackColor = true;
+            this.button_clear.Click += new System.EventHandler(this.button_clear_Click);
+            // 
+            // button_wrap
+            // 
+            this.button_wrap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_wrap.BackgroundImage = global::AnkaninStalker.Properties.Resources.wrap;
+            this.button_wrap.Location = new System.Drawing.Point(200, 3);
+            this.button_wrap.Name = "button_wrap";
+            this.button_wrap.Size = new System.Drawing.Size(24, 24);
+            this.button_wrap.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.button_wrap, "折り返しモード切替\r\n（Ctrl＋U）");
+            this.button_wrap.UseVisualStyleBackColor = true;
+            this.button_wrap.Click += new System.EventHandler(this.button_wrap_Click);
+            // 
             // richTextBox1
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -277,66 +348,9 @@
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.WordWrap = false;
-            // 
-            // button_clear
-            // 
-            this.button_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_clear.BackgroundImage = global::AnkaninStalker.Properties.Resources.clear;
-            this.button_clear.Location = new System.Drawing.Point(248, 3);
-            this.button_clear.Name = "button_clear";
-            this.button_clear.Size = new System.Drawing.Size(24, 24);
-            this.button_clear.TabIndex = 2;
-            this.button_clear.UseVisualStyleBackColor = true;
-            // 
-            // button_wrap
-            // 
-            this.button_wrap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_wrap.BackgroundImage = global::AnkaninStalker.Properties.Resources.wrap;
-            this.button_wrap.Location = new System.Drawing.Point(200, 3);
-            this.button_wrap.Name = "button_wrap";
-            this.button_wrap.Size = new System.Drawing.Size(24, 24);
-            this.button_wrap.TabIndex = 1;
-            this.button_wrap.UseVisualStyleBackColor = true;
-            // 
-            // button_line
-            // 
-            this.button_line.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_line.BackgroundImage = global::AnkaninStalker.Properties.Resources.line;
-            this.button_line.Location = new System.Drawing.Point(224, 3);
-            this.button_line.Name = "button_line";
-            this.button_line.Size = new System.Drawing.Size(24, 24);
-            this.button_line.TabIndex = 3;
-            this.button_line.UseVisualStyleBackColor = true;
-            // 
-            // button_load
-            // 
-            this.button_load.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_load.BackgroundImage = global::AnkaninStalker.Properties.Resources.load;
-            this.button_load.Location = new System.Drawing.Point(176, 3);
-            this.button_load.Name = "button_load";
-            this.button_load.Size = new System.Drawing.Size(24, 24);
-            this.button_load.TabIndex = 4;
-            this.button_load.UseVisualStyleBackColor = true;
-            // 
-            // button_save
-            // 
-            this.button_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_save.BackgroundImage = global::AnkaninStalker.Properties.Resources.save;
-            this.button_save.Location = new System.Drawing.Point(152, 3);
-            this.button_save.Name = "button_save";
-            this.button_save.Size = new System.Drawing.Size(24, 24);
-            this.button_save.TabIndex = 5;
-            this.button_save.UseVisualStyleBackColor = true;
-            // 
-            // label_linenum
-            // 
-            this.label_linenum.AutoSize = true;
-            this.label_linenum.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_linenum.Location = new System.Drawing.Point(7, 10);
-            this.label_linenum.Name = "label_linenum";
-            this.label_linenum.Size = new System.Drawing.Size(43, 12);
-            this.label_linenum.TabIndex = 6;
-            this.label_linenum.Text = "XX行目";
+            this.richTextBox1.Click += new System.EventHandler(this.richTextBox1_Click);
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             // 
             // Form1
             // 
@@ -398,6 +412,7 @@
         private System.Windows.Forms.Button button_load;
         private System.Windows.Forms.Button button_line;
         private System.Windows.Forms.Label label_linenum;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

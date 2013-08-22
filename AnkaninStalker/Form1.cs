@@ -56,6 +56,7 @@ namespace AnkaninStalker
             this.SettingInstanse.topMost = Properties.Settings.Default.topmost;
             this.SettingInstanse.viewName = Properties.Settings.Default.view_name;
             this.SettingInstanse.viewMail = Properties.Settings.Default.view_mail;
+            this.richTextBox1.Text = Properties.Settings.Default.memo;
 
             // 開始フラグ
             boolStartFlag = false;
@@ -477,14 +478,98 @@ namespace AnkaninStalker
             }
         }
 
+        private void button_save_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.memo = this.richTextBox1.Text;
+            Properties.Settings.Default.Save();
+            this.label_error.Text = DateTime.Now.ToString() + " " + "メモを保存しました。";
+        }
+
+        private void button_load_Click(object sender, EventArgs e)
+        {
+            this.richTextBox1.Text = Properties.Settings.Default.memo;
+            this.label_error.Text = DateTime.Now.ToString() + " " + "メモをロードしました。";
+        }
+
+        private void button_wrap_Click(object sender, EventArgs e)
+        {
+            this.richTextBox1.WordWrap = !this.richTextBox1.WordWrap;
+        }
+
+        private void button_line_Click(object sender, EventArgs e)
+        {
+            // カーソル位置にライン追加
+            if (richTextBox1.SelectedText.Length == 0)
+                richTextBox1.SelectedText = "\r\n" + "------------------" + "\r\n";
+            richTextBox1.Focus();
+
+        }
+
+        private void button_clear_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Text = "";
+        }
+
+        // コントロールのショートカット
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == (Keys.Control | Keys.S))
+            {
+                this.button_save.PerformClick();
+            }
+            if (e.KeyData == (Keys.Control | Keys.L))
+            {
+                this.button_load.PerformClick();
+            }
+            if (e.KeyData == (Keys.Control | Keys.U))
+            {
+                this.button_wrap.PerformClick();
+            }
+            if (e.KeyData == (Keys.Control | Keys.OemMinus))
+            {
+                this.button_line.PerformClick();
+            }
+            if (e.KeyData == (Keys.Control | Keys.Delete))
+            {
+                this.button_clear.PerformClick();
+            }
+
+            int line = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart) + 1;
+            if (e.KeyData == (Keys.Up))
+            {
+                line = (--line == 0) ? 1 : line;
+            }
+            if (e.KeyData == (Keys.Down))
+            {
+                int len = richTextBox1.Lines.Length == 0 ? 1 : richTextBox1.Lines.Length;
+                line = (++line >= len) ? len : line;
+            }
+            label_linenum.Text = line.ToString() + "行目";
+
+            // 右と左は対応しかねる。
+
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            int line = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart) + 1;
+            label_linenum.Text = line.ToString() + "行目";
+        }
+
+        private void richTextBox1_Click(object sender, EventArgs e)
+        {
+            int line = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart) + 1;
+            label_linenum.Text = line.ToString() + "行目";
+        }
+
     }
 }
 
 // 開発計画
 
 //・メモ帳　OK
-//　Ctrl+-で水平線（("------------------)
-//　Ctrl+Sで保存、Ctrl+Lでロード、Ctrl+UでWrap切り替え
+//　Ctrl+-で水平線（("------------------) OK
+//　Ctrl+Sで保存、Ctrl+Lでロード、Ctrl+UでWrap切り替え OK
 //・字幕
 //・複数スレッド監視
 //・複数ID監視

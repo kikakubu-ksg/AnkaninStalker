@@ -42,14 +42,26 @@
             this.panel_error = new System.Windows.Forms.Panel();
             this.label_error = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.安価人レス = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label_ID = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label_threadname = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button_clear = new System.Windows.Forms.Button();
+            this.button_wrap = new System.Windows.Forms.Button();
+            this.button_line = new System.Windows.Forms.Button();
+            this.button_load = new System.Windows.Forms.Button();
+            this.button_save = new System.Windows.Forms.Button();
+            this.label_linenum = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel_info.SuspendLayout();
             this.panel_error.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -80,12 +92,12 @@
             // buttonSwitch
             // 
             this.buttonSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSwitch.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSwitch.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonSwitch.Location = new System.Drawing.Point(179, 0);
             this.buttonSwitch.Name = "buttonSwitch";
             this.buttonSwitch.Size = new System.Drawing.Size(48, 45);
             this.buttonSwitch.TabIndex = 1;
-            this.buttonSwitch.Text = "button1";
+            this.buttonSwitch.Text = "追跡\r\n開始";
             this.buttonSwitch.UseVisualStyleBackColor = true;
             this.buttonSwitch.Click += new System.EventHandler(this.buttonSwitch_Click);
             // 
@@ -106,7 +118,7 @@
             // button_reset
             // 
             this.button_reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_reset.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_reset.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button_reset.Location = new System.Drawing.Point(227, 0);
             this.button_reset.Name = "button_reset";
             this.button_reset.Size = new System.Drawing.Size(50, 45);
@@ -118,30 +130,30 @@
             // label_m2
             // 
             this.label_m2.AutoSize = true;
-            this.label_m2.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_m2.Location = new System.Drawing.Point(4, 53);
+            this.label_m2.Font = new System.Drawing.Font("メイリオ", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_m2.Location = new System.Drawing.Point(7, 49);
             this.label_m2.Name = "label_m2";
-            this.label_m2.Size = new System.Drawing.Size(149, 33);
+            this.label_m2.Size = new System.Drawing.Size(140, 44);
             this.label_m2.TabIndex = 4;
-            this.label_m2.Text = "--分--秒";
+            this.label_m2.Text = "--分 --秒";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(208, 62);
+            this.label2.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.Location = new System.Drawing.Point(210, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 24);
+            this.label2.Size = new System.Drawing.Size(63, 36);
             this.label2.TabIndex = 3;
             this.label2.Text = "経過";
             // 
             // label_m1
             // 
             this.label_m1.AutoSize = true;
-            this.label_m1.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_m1.Font = new System.Drawing.Font("メイリオ", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label_m1.Location = new System.Drawing.Point(10, 9);
             this.label_m1.Name = "label_m1";
-            this.label_m1.Size = new System.Drawing.Size(111, 19);
+            this.label_m1.Size = new System.Drawing.Size(126, 28);
             this.label_m1.TabIndex = 2;
             this.label_m1.Text = "最終レスから";
             // 
@@ -168,26 +180,18 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(0, 196);
+            this.textBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox1.Location = new System.Drawing.Point(3, 18);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(278, 144);
+            this.textBox1.Size = new System.Drawing.Size(266, 116);
             this.textBox1.TabIndex = 4;
-            // 
-            // 安価人レス
-            // 
-            this.安価人レス.AutoSize = true;
-            this.安価人レス.Location = new System.Drawing.Point(2, 181);
-            this.安価人レス.Name = "安価人レス";
-            this.安価人レス.Size = new System.Drawing.Size(59, 12);
-            this.安価人レス.TabIndex = 5;
-            this.安価人レス.Text = "安価人レス";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(156, 181);
+            this.label1.Location = new System.Drawing.Point(78, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(22, 12);
             this.label1.TabIndex = 6;
@@ -196,7 +200,7 @@
             // label_ID
             // 
             this.label_ID.AutoSize = true;
-            this.label_ID.Location = new System.Drawing.Point(184, 181);
+            this.label_ID.Location = new System.Drawing.Point(106, 3);
             this.label_ID.Name = "label_ID";
             this.label_ID.Size = new System.Drawing.Size(57, 12);
             this.label_ID.TabIndex = 7;
@@ -215,16 +219,132 @@
             this.label_threadname.TabIndex = 8;
             this.label_threadname.Text = "スレッド名";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.tabControl1.Location = new System.Drawing.Point(1, 178);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(280, 162);
+            this.tabControl1.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.label_ID);
+            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(272, 137);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "安価人レス";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.label_linenum);
+            this.tabPage2.Controls.Add(this.button_save);
+            this.tabPage2.Controls.Add(this.button_load);
+            this.tabPage2.Controls.Add(this.button_line);
+            this.tabPage2.Controls.Add(this.button_clear);
+            this.tabPage2.Controls.Add(this.button_wrap);
+            this.tabPage2.Controls.Add(this.richTextBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(272, 137);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "メモ帳";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.richTextBox1.Location = new System.Drawing.Point(0, 29);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
+            this.richTextBox1.Size = new System.Drawing.Size(272, 108);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.WordWrap = false;
+            // 
+            // button_clear
+            // 
+            this.button_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_clear.BackgroundImage = global::AnkaninStalker.Properties.Resources.clear;
+            this.button_clear.Location = new System.Drawing.Point(248, 3);
+            this.button_clear.Name = "button_clear";
+            this.button_clear.Size = new System.Drawing.Size(24, 24);
+            this.button_clear.TabIndex = 2;
+            this.button_clear.UseVisualStyleBackColor = true;
+            // 
+            // button_wrap
+            // 
+            this.button_wrap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_wrap.BackgroundImage = global::AnkaninStalker.Properties.Resources.wrap;
+            this.button_wrap.Location = new System.Drawing.Point(200, 3);
+            this.button_wrap.Name = "button_wrap";
+            this.button_wrap.Size = new System.Drawing.Size(24, 24);
+            this.button_wrap.TabIndex = 1;
+            this.button_wrap.UseVisualStyleBackColor = true;
+            // 
+            // button_line
+            // 
+            this.button_line.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_line.BackgroundImage = global::AnkaninStalker.Properties.Resources.line;
+            this.button_line.Location = new System.Drawing.Point(224, 3);
+            this.button_line.Name = "button_line";
+            this.button_line.Size = new System.Drawing.Size(24, 24);
+            this.button_line.TabIndex = 3;
+            this.button_line.UseVisualStyleBackColor = true;
+            // 
+            // button_load
+            // 
+            this.button_load.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_load.BackgroundImage = global::AnkaninStalker.Properties.Resources.load;
+            this.button_load.Location = new System.Drawing.Point(176, 3);
+            this.button_load.Name = "button_load";
+            this.button_load.Size = new System.Drawing.Size(24, 24);
+            this.button_load.TabIndex = 4;
+            this.button_load.UseVisualStyleBackColor = true;
+            // 
+            // button_save
+            // 
+            this.button_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_save.BackgroundImage = global::AnkaninStalker.Properties.Resources.save;
+            this.button_save.Location = new System.Drawing.Point(152, 3);
+            this.button_save.Name = "button_save";
+            this.button_save.Size = new System.Drawing.Size(24, 24);
+            this.button_save.TabIndex = 5;
+            this.button_save.UseVisualStyleBackColor = true;
+            // 
+            // label_linenum
+            // 
+            this.label_linenum.AutoSize = true;
+            this.label_linenum.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_linenum.Location = new System.Drawing.Point(7, 10);
+            this.label_linenum.Name = "label_linenum";
+            this.label_linenum.Size = new System.Drawing.Size(43, 12);
+            this.label_linenum.TabIndex = 6;
+            this.label_linenum.Text = "XX行目";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 339);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label_threadname);
-            this.Controls.Add(this.label_ID);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.安価人レス);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel_error);
             this.Controls.Add(this.panel_info);
             this.Controls.Add(this.menuStrip1);
@@ -240,6 +360,11 @@
             this.panel_info.PerformLayout();
             this.panel_error.ResumeLayout(false);
             this.panel_error.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,7 +379,6 @@
         private System.Windows.Forms.Panel panel_info;
         private System.Windows.Forms.Panel panel_error;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label 安価人レス;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label_error;
         private System.Windows.Forms.Label label_ID;
@@ -264,6 +388,16 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button_reset;
         private System.Windows.Forms.Label label_threadname;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button_wrap;
+        private System.Windows.Forms.Button button_clear;
+        private System.Windows.Forms.Button button_save;
+        private System.Windows.Forms.Button button_load;
+        private System.Windows.Forms.Button button_line;
+        private System.Windows.Forms.Label label_linenum;
     }
 }
 

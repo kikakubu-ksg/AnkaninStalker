@@ -106,5 +106,17 @@ namespace AnkaninStalker.Properties {
                 this["view_mail"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string memo {
+            get {
+                return ((string)(this["memo"]));
+            }
+            set {
+                this["memo"] = value;
+            }
+        }
     }
 }

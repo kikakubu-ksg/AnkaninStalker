@@ -81,6 +81,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Setting.resx">
       <DependentUpon>Setting.cs</DependentUpon>
@@ -101,6 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="52140ca57d36e.ico" />
+    <None Include="line.bmp" />
+    <None Include="save.bmp" />
+    <None Include="load.bmp" />
+    <None Include="clear.bmp" />
+    <None Include="wrap.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

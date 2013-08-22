@@ -475,6 +475,9 @@ namespace AnkaninStalker
 
 // 開発計画
 
+//・メモ帳　OK
+//　Ctrl+-で水平線（("------------------)
+//　Ctrl+Sで保存、Ctrl+Lでロード、Ctrl+UでWrap切り替え
 //・字幕
 //・複数スレッド監視
 //・複数ID監視
@@ -482,3 +485,4 @@ namespace AnkaninStalker
 //・効果音
 //・talk機能
 //・名前・メ欄ストーカー機能
+//・安価人の冒険

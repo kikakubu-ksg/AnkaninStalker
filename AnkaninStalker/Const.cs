@@ -8,8 +8,11 @@ namespace AnkaninStalker
     class Const
     {
 
-        public static int BBS_2CH = 0;
-        public static int BBS_SHITARABA = 1;
+        public const int BBS_2CH = 0;
+        public const int BBS_SHITARABA = 1;
+
+        public const int TAB_RES = 0;
+        public const int TAB_MEMO = 1;
 
     }
 }

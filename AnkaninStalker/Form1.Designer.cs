@@ -41,7 +41,7 @@
             this.label_m1 = new System.Windows.Forms.Label();
             this.panel_error = new System.Windows.Forms.Panel();
             this.label_error = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label_ID = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -183,11 +183,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox1.Location = new System.Drawing.Point(3, 18);
-            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(266, 116);
+            this.textBox1.Size = new System.Drawing.Size(266, 115);
             this.textBox1.TabIndex = 4;
+            this.textBox1.Text = "";
+            this.textBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textBox1_LinkClicked);
             // 
             // label1
             // 
@@ -228,11 +228,14 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.tabControl1.ItemSize = new System.Drawing.Size(60, 18);
             this.tabControl1.Location = new System.Drawing.Point(1, 178);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(280, 162);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 9;
+            this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
             // 
             // tabPage1
             // 
@@ -240,10 +243,10 @@
             this.tabPage1.Controls.Add(this.label_ID);
             this.tabPage1.Controls.Add(this.textBox1);
             this.tabPage1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(272, 137);
+            this.tabPage1.Size = new System.Drawing.Size(272, 136);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "安価人レス";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -257,10 +260,10 @@
             this.tabPage2.Controls.Add(this.button_clear);
             this.tabPage2.Controls.Add(this.button_wrap);
             this.tabPage2.Controls.Add(this.richTextBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(272, 137);
+            this.tabPage2.Size = new System.Drawing.Size(272, 136);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "メモ帳";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -344,7 +347,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(0, 29);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.richTextBox1.Size = new System.Drawing.Size(272, 108);
+            this.richTextBox1.Size = new System.Drawing.Size(272, 107);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.WordWrap = false;
@@ -392,7 +395,7 @@
         private System.Windows.Forms.Button buttonSwitch;
         private System.Windows.Forms.Panel panel_info;
         private System.Windows.Forms.Panel panel_error;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RichTextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label_error;
         private System.Windows.Forms.Label label_ID;

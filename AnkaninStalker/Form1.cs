@@ -26,6 +26,9 @@ namespace AnkaninStalker
         public Int32 resnum = 0;
         public Boolean boolThreadDup = false; //スレッド重複防止
 
+        // タブ色用 
+        public Boolean boolResAdded = false;
+
         // default font
         public System.Drawing.Font basefont;
 
@@ -52,6 +55,8 @@ namespace AnkaninStalker
             this.SettingInstanse.strConfig = ConfigurationManager.OpenExeConfiguration(
                 ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
 
+            //TabControlをオーナードローする
+            tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
 
             // 設定値割り当て
             this.SettingInstanse.strThread = Properties.Settings.Default.Thread;
@@ -245,7 +250,7 @@ namespace AnkaninStalker
 
                     // 読み込んだレス番号を更新
                     this.BeginInvoke(new Action<Int32>(delegate(Int32 i) { this.resnumupdate(rescnt); }), new object[] { 0 });
-
+                    string target = "";
                     if (bbstype == Const.BBS_2CH)
                     {
                         Match m = r5.Match(stArrayData[indexDate]);
@@ -260,13 +265,15 @@ namespace AnkaninStalker
                             long tick = DateTime.Now.Ticks - d.Ticks;
                             this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
 
-                            // レス更新
-                            string target = rescnt.ToString() + " " + stArrayData[indexDate] + "\r\n" + stArrayData[indexBody].Replace("<br>", "\r\n");
-                            this.BeginInvoke(new Action<String>(delegate(String str)
-                            {
-                                this.resoutput(target);
-                            }), new object[] { "" });
+                            string body = "";
+                            string patternStr = @"<.*?>";
+                            body = stArrayData[indexBody];
+                            body = body.Replace("<br>", "\r\n");
+                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline); 
 
+                            // レス更新
+                            target = rescnt.ToString() + " " + stArrayData[indexDate] + "\r\n" + WebUtility.HtmlDecode(body);
+                            
                             news++;
                         }
                     }
@@ -284,17 +291,29 @@ namespace AnkaninStalker
                             long tick = DateTime.Now.Ticks - d.Ticks;
                             this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
 
+                            string body = "";
+                            string patternStr = @"<.*?>";
+                            body = stArrayData[indexBody];
+                            body = body.Replace("<br>", "\r\n");
+                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline); 
+
                             // レス更新
                             string name = (this.SettingInstanse.viewName) ? stArrayData[indexName] + " " : "";
                             string mail = (this.SettingInstanse.viewMail) ? "[" + stArrayData[indexMail] + "] " : "";
-                            string target = rescnt.ToString() + " " + name + mail + stArrayData[indexDate] + " ID:" + aid + "\r\n" + stArrayData[indexBody].Replace("<br>", "\r\n");
-                            this.BeginInvoke(new Action<String>(delegate(String str)
-                            {
-                                this.resoutput(target);
-                            }), new object[] { "" });
-
+                            target = rescnt.ToString() + " " + name + mail + stArrayData[indexDate] + " ID:" + aid + "\r\n" + WebUtility.HtmlDecode(body);
+                            
                             news++;
                         }
+
+                        
+                    }
+
+                    if (target.Length != 0)
+                    {
+                        this.BeginInvoke(new Action<String>(delegate(String str)
+                        {
+                            this.resoutput(target);
+                        }), new object[] { "" });
                     }
 
                 }
@@ -306,6 +325,12 @@ namespace AnkaninStalker
                     {
                         this.resexistupdate(true);
                     }), new object[] { false });
+
+                    // レス表示タブが非アクティブの時にレスが追加された場合
+                    //if (this.tabControl1.SelectedIndex != Const.TAB_RES)
+                    //{
+                        boolResAdded = true;
+                    //}
 
                     this.BeginInvoke(new Action(delegate()
                     {
@@ -567,6 +592,50 @@ namespace AnkaninStalker
             label_linenum.Text = line.ToString() + "行目";
         }
 
+        private void textBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            drawTab(sender, e);
+        }
+
+        public void drawTab(object sender, DrawItemEventArgs e){
+            //対象のTabControlを取得
+            TabControl tab = (TabControl)sender;
+            //タブページのテキストを取得
+            string txt = tab.TabPages[e.Index].Text;
+
+            //タブのテキストと背景を描画するためのブラシを決定する
+            Brush foreBrush, backBrush;
+            if (this.tabControl1.SelectedIndex == Const.TAB_RES) { boolResAdded = false; }
+            if (e.Index == Const.TAB_RES && boolResAdded)
+            //if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                //選択されているタブのテキストを赤、背景を青とする
+                foreBrush = Brushes.Black;
+                backBrush = Brushes.Orange;
+            }
+            else
+            {
+                //選択されていないタブのテキストは灰色、背景を白とする
+                foreBrush = Brushes.Black;
+                backBrush = Brushes.White;
+            }
+
+            //StringFormatを作成
+            StringFormat sf = new StringFormat();
+            //中央に表示する
+            sf.Alignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
+
+            //背景の描画
+            e.Graphics.FillRectangle(backBrush, e.Bounds);
+            //Textの描画
+            e.Graphics.DrawString(txt, e.Font, foreBrush, e.Bounds, sf);
+        }
     }
 }
 
@@ -587,3 +656,5 @@ namespace AnkaninStalker
 //・更新時間のconfig化
 //・統計情報
 //・収納機能
+//・アンカー表示対応　フロートボックスで表示する⇒めんどいやめやめ OK
+//・安価人レス時にタブ開いてなかったら色つける（オレンジ）

@@ -118,5 +118,29 @@ namespace AnkaninStalker.Properties {
                 this["memo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Thread_haven {
+            get {
+                return ((string)(this["Thread_haven"]));
+            }
+            set {
+                this["Thread_haven"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ID_haven {
+            get {
+                return ((string)(this["ID_haven"]));
+            }
+            set {
+                this["ID_haven"] = value;
+            }
+        }
     }
 }

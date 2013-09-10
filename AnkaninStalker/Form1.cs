@@ -14,7 +14,8 @@ namespace AnkaninStalker
 
         public Version VersionInstanse;
         public Setting SettingInstanse;
-        public Thread th = null;
+        public Thread th = null; // 本スレ取得スレッド
+        public Thread th_h = null; // 避難所スレ取得スレッド
 
         public Boolean boolStartFlag;
         public Boolean boolResExist;
@@ -25,6 +26,7 @@ namespace AnkaninStalker
 
         public Int32 resnum = 0;
         public Boolean boolThreadDup = false; //スレッド重複防止
+        public Boolean boolThreadDup_h = false; //スレッド重複防止
 
         // タブ色用 
         public Boolean boolResAdded = false;
@@ -61,6 +63,8 @@ namespace AnkaninStalker
             // 設定値割り当て
             this.SettingInstanse.strThread = Properties.Settings.Default.Thread;
             this.SettingInstanse.strID = Properties.Settings.Default.ID;
+            this.SettingInstanse.strThread_haven = Properties.Settings.Default.Thread_haven;
+            this.SettingInstanse.strID_haven = Properties.Settings.Default.ID_haven;
             this.SettingInstanse.intLimit1 = Properties.Settings.Default.limit_1;
             this.SettingInstanse.intLimit2 = Properties.Settings.Default.limit_2;
             this.SettingInstanse.topMost = Properties.Settings.Default.topmost;
@@ -103,11 +107,34 @@ namespace AnkaninStalker
             // データ取得処理
                 boolThreadDup = true;
                 //Threadオブジェクトを作成する
+                object[] obj = new object[5]; // 引数
+
+                obj[0] = Const.BOARD_MAIN;
+                obj[1] = this.SettingInstanse.strThread; //スレURL
+
                 th =
                     new System.Threading.Thread(
-                    new System.Threading.ThreadStart(HttpThread));
+                    new System.Threading.ParameterizedThreadStart(HttpThread));
                 //スレッドを開始する
-                th.Start();
+                th.Start(obj);
+
+            }
+            if (this.httptimersec % 15 == 0 && !boolThreadDup_h)
+            {
+                // データ取得処理
+                boolThreadDup_h = true;
+                //Threadオブジェクトを作成する
+                object[] obj = new object[5]; // 引数
+
+                obj[0] = Const.BOARD_HAVEN;
+                obj[1] = this.SettingInstanse.strThread_haven; //スレURL
+
+                th_h =
+                    new System.Threading.Thread(
+                    new System.Threading.ParameterizedThreadStart(HttpThread));
+                //スレッドを開始する
+                th_h.Start(obj);
+
             }
 
             // 経過時間作成
@@ -137,7 +164,10 @@ namespace AnkaninStalker
             
         }
 
-        private void HttpThread()
+        /// <summary>
+        /// 
+        /// </summary>
+        private void HttpThread(object args)
         {
             string host;
             string strGet = "";
@@ -148,11 +178,17 @@ namespace AnkaninStalker
             int indexBody;
             int indexName;
             int indexMail;
-            
+
+            object[] argsTmp = (object[])args;
+            int bbsCode = (int)argsTmp[0]; // 本/避難所区分
+            string strUrl = (string)argsTmp[1]; // スレURL
+            string strHi = "";
+            if (bbsCode == Const.BOARD_HAVEN) { strHi = "[避]"; }
+
             try
             {
                 // datURL取得
-                Console.WriteLine(this.SettingInstanse.strThread);
+                Console.WriteLine(strUrl);
                 //Regexオブジェクトを作成
                 Regex r1 = new Regex(@"2ch\.net");
                 Regex r2 = new Regex(@"jbbs\.livedoor\.jp");
@@ -161,7 +197,7 @@ namespace AnkaninStalker
                 Regex r5 = new Regex(@"(\d{4})\/(\d{2})\/(\d{2})\(.*\) (\d{2}):(\d{2}):(\d{2})\.\d{2} ID:(.*)");
                 Regex r6 = new Regex(@"(\d{4})\/(\d{2})\/(\d{2})\(.*\) (\d{2}):(\d{2}):(\d{2})");
 
-                if (r1.Match(this.SettingInstanse.strThread).Success)
+                if (r1.Match(strUrl).Success)
                 {
                     bbstype = Const.BBS_2CH;
                     indexThreadName = 4;
@@ -169,7 +205,7 @@ namespace AnkaninStalker
                     indexBody = 3;
                     indexName = 0;
                     indexMail = 1;
-                    Match m = r3.Match(this.SettingInstanse.strThread);
+                    Match m = r3.Match(strUrl);
                     if (!m.Success)
                     {
                         this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput("スレッドURLが不正です。"); }), new object[] { "" });
@@ -184,7 +220,7 @@ namespace AnkaninStalker
                     enc = Encoding.GetEncoding("shift-jis");
 
                 }
-                else if (r2.Match(this.SettingInstanse.strThread).Success)
+                else if (r2.Match(strUrl).Success)
                 {
                     bbstype = Const.BBS_SHITARABA;
                     indexThreadName = 5;
@@ -192,7 +228,7 @@ namespace AnkaninStalker
                     indexBody = 4;
                     indexName = 1;
                     indexMail = 2;
-                    Match m = r4.Match(this.SettingInstanse.strThread);
+                    Match m = r4.Match(strUrl);
                     if (!m.Success)
                     {
                         this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput("スレッドURLが不正です。"); }), new object[] { "" });
@@ -272,7 +308,7 @@ namespace AnkaninStalker
                             body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline); 
 
                             // レス更新
-                            target = rescnt.ToString() + " " + stArrayData[indexDate] + "\r\n" + WebUtility.HtmlDecode(body);
+                            target = strHi + rescnt.ToString() + " " + stArrayData[indexDate] + "\r\n" + WebUtility.HtmlDecode(body);
                             
                             news++;
                         }
@@ -300,7 +336,7 @@ namespace AnkaninStalker
                             // レス更新
                             string name = (this.SettingInstanse.viewName) ? stArrayData[indexName] + " " : "";
                             string mail = (this.SettingInstanse.viewMail) ? "[" + stArrayData[indexMail] + "] " : "";
-                            target = rescnt.ToString() + " " + name + mail + stArrayData[indexDate] + " ID:" + aid + "\r\n" + WebUtility.HtmlDecode(body);
+                            target = strHi + rescnt.ToString() + " " + name + mail + stArrayData[indexDate] + " ID:" + aid + "\r\n" + WebUtility.HtmlDecode(body);
                             
                             news++;
                         }
@@ -417,6 +453,7 @@ namespace AnkaninStalker
         public void resetthreaddup()
         {
             this.boolThreadDup = false;
+            this.boolThreadDup_h = false;
         }
         
         private void buttonSwitch_Click(object sender, EventArgs e)
@@ -464,6 +501,7 @@ namespace AnkaninStalker
             {
                 this.timer1.Stop();
                 if (th != null) { th.Abort(); th = null; }
+                if (th_h != null) { th_h.Abort(); th_h = null; }
             }
             catch (Exception ex)
             {
@@ -479,6 +517,7 @@ namespace AnkaninStalker
 
             resnum = 0;
             boolThreadDup = false;
+            boolThreadDup_h = false;
 
             this.buttonSwitch.Text = "追跡\r\n開始";
             this.buttonSwitch.BackColor = SystemColors.Control;
@@ -501,6 +540,7 @@ namespace AnkaninStalker
             {
                 this.timer1.Stop();
                 if (th != null) { th.Abort(); th = null; }
+                if (th_h != null) { th_h.Abort(); th_h = null; }
             }
             catch (Exception ex)
             {

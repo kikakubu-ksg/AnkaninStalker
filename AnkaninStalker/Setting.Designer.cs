@@ -46,6 +46,10 @@
             this.checkBox_viewmail = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_config = new System.Windows.Forms.TextBox();
+            this.textBox_Thread_haven = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox_ID_haven = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -53,21 +57,21 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 12);
+            this.label1.Size = new System.Drawing.Size(155, 12);
             this.label1.TabIndex = 0;
-            this.label1.Text = "スレURL（２ｃｈまたはしたらば）";
+            this.label1.Text = "本スレURL（２ｃｈまたはしたらば）";
             // 
             // textBox_Thread
             // 
             this.textBox_Thread.Location = new System.Drawing.Point(7, 21);
             this.textBox_Thread.Name = "textBox_Thread";
-            this.textBox_Thread.Size = new System.Drawing.Size(423, 19);
+            this.textBox_Thread.Size = new System.Drawing.Size(411, 19);
             this.textBox_Thread.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 47);
+            this.label2.Location = new System.Drawing.Point(9, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 12);
             this.label2.TabIndex = 2;
@@ -75,7 +79,7 @@
             // 
             // textBox_ID
             // 
-            this.textBox_ID.Location = new System.Drawing.Point(7, 62);
+            this.textBox_ID.Location = new System.Drawing.Point(7, 57);
             this.textBox_ID.Name = "textBox_ID";
             this.textBox_ID.Size = new System.Drawing.Size(153, 19);
             this.textBox_ID.TabIndex = 3;
@@ -83,7 +87,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 88);
+            this.label3.Location = new System.Drawing.Point(9, 165);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 12);
             this.label3.TabIndex = 4;
@@ -91,7 +95,7 @@
             // 
             // textBox_Limit1
             // 
-            this.textBox_Limit1.Location = new System.Drawing.Point(23, 103);
+            this.textBox_Limit1.Location = new System.Drawing.Point(23, 180);
             this.textBox_Limit1.Name = "textBox_Limit1";
             this.textBox_Limit1.Size = new System.Drawing.Size(47, 19);
             this.textBox_Limit1.TabIndex = 5;
@@ -100,7 +104,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(76, 106);
+            this.label4.Location = new System.Drawing.Point(76, 183);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 6;
@@ -109,7 +113,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(76, 144);
+            this.label5.Location = new System.Drawing.Point(76, 221);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(17, 12);
             this.label5.TabIndex = 8;
@@ -117,7 +121,7 @@
             // 
             // textBox_Limit2
             // 
-            this.textBox_Limit2.Location = new System.Drawing.Point(23, 141);
+            this.textBox_Limit2.Location = new System.Drawing.Point(23, 218);
             this.textBox_Limit2.Name = "textBox_Limit2";
             this.textBox_Limit2.Size = new System.Drawing.Size(47, 19);
             this.textBox_Limit2.TabIndex = 7;
@@ -126,7 +130,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 125);
+            this.label6.Location = new System.Drawing.Point(9, 202);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 12);
             this.label6.TabIndex = 9;
@@ -134,7 +138,7 @@
             // 
             // button_Setting_OK
             // 
-            this.button_Setting_OK.Location = new System.Drawing.Point(259, 272);
+            this.button_Setting_OK.Location = new System.Drawing.Point(259, 349);
             this.button_Setting_OK.Name = "button_Setting_OK";
             this.button_Setting_OK.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_OK.TabIndex = 10;
@@ -144,7 +148,7 @@
             // 
             // button_Setting_CNS
             // 
-            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 272);
+            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 349);
             this.button_Setting_CNS.Name = "button_Setting_CNS";
             this.button_Setting_CNS.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_CNS.TabIndex = 11;
@@ -155,7 +159,7 @@
             // checkBox_topmost
             // 
             this.checkBox_topmost.AutoSize = true;
-            this.checkBox_topmost.Location = new System.Drawing.Point(235, 62);
+            this.checkBox_topmost.Location = new System.Drawing.Point(235, 165);
             this.checkBox_topmost.Name = "checkBox_topmost";
             this.checkBox_topmost.Size = new System.Drawing.Size(114, 16);
             this.checkBox_topmost.TabIndex = 12;
@@ -165,7 +169,7 @@
             // checkBox_viewname
             // 
             this.checkBox_viewname.AutoSize = true;
-            this.checkBox_viewname.Location = new System.Drawing.Point(235, 84);
+            this.checkBox_viewname.Location = new System.Drawing.Point(235, 187);
             this.checkBox_viewname.Name = "checkBox_viewname";
             this.checkBox_viewname.Size = new System.Drawing.Size(100, 16);
             this.checkBox_viewname.TabIndex = 13;
@@ -175,7 +179,7 @@
             // checkBox_viewmail
             // 
             this.checkBox_viewmail.AutoSize = true;
-            this.checkBox_viewmail.Location = new System.Drawing.Point(235, 105);
+            this.checkBox_viewmail.Location = new System.Drawing.Point(235, 208);
             this.checkBox_viewmail.Name = "checkBox_viewmail";
             this.checkBox_viewmail.Size = new System.Drawing.Size(116, 16);
             this.checkBox_viewmail.TabIndex = 14;
@@ -185,7 +189,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 211);
+            this.label7.Location = new System.Drawing.Point(7, 288);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(114, 12);
             this.label7.TabIndex = 15;
@@ -193,18 +197,54 @@
             // 
             // textBox_config
             // 
-            this.textBox_config.Location = new System.Drawing.Point(9, 227);
+            this.textBox_config.Location = new System.Drawing.Point(9, 304);
             this.textBox_config.Multiline = true;
             this.textBox_config.Name = "textBox_config";
             this.textBox_config.ReadOnly = true;
             this.textBox_config.Size = new System.Drawing.Size(409, 24);
             this.textBox_config.TabIndex = 16;
             // 
+            // textBox_Thread_haven
+            // 
+            this.textBox_Thread_haven.Location = new System.Drawing.Point(7, 94);
+            this.textBox_Thread_haven.Name = "textBox_Thread_haven";
+            this.textBox_Thread_haven.Size = new System.Drawing.Size(411, 19);
+            this.textBox_Thread_haven.TabIndex = 18;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 79);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(179, 12);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "避難所スレURL（２ｃｈまたはしたらば）";
+            // 
+            // textBox_ID_haven
+            // 
+            this.textBox_ID_haven.Location = new System.Drawing.Point(7, 131);
+            this.textBox_ID_haven.Name = "textBox_ID_haven";
+            this.textBox_ID_haven.Size = new System.Drawing.Size(153, 19);
+            this.textBox_ID_haven.TabIndex = 20;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 116);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(100, 12);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "安価人ID（避難所）";
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 307);
+            this.ClientSize = new System.Drawing.Size(430, 380);
+            this.Controls.Add(this.textBox_ID_haven);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.textBox_Thread_haven);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox_config);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.checkBox_viewmail);
@@ -251,5 +291,9 @@
         private System.Windows.Forms.CheckBox checkBox_viewmail;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox_config;
+        private System.Windows.Forms.TextBox textBox_Thread_haven;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox_ID_haven;
+        private System.Windows.Forms.Label label9;
     }
 }

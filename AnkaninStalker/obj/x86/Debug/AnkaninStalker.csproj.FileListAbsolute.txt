@@ -10,3 +10,5 @@ C:\DEV\AnkaninStalker\AnkaninStalker\obj\x86\Debug\AnkaninStalker.exe
 C:\DEV\AnkaninStalker\AnkaninStalker\obj\x86\Debug\AnkaninStalker.pdb
 C:\DEV\AnkaninStalker\AnkaninStalker\obj\x86\Debug\AnkaninStalker.Setting.resources
 C:\DEV\AnkaninStalker\AnkaninStalker\obj\x86\Debug\AnkaninStalker.Version.resources
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Debug\ResGen.read.1.tlog
+C:\DEV\ankaninstalker\AnkaninStalker\obj\x86\Debug\ResGen.write.1.tlog

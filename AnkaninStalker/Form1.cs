@@ -16,6 +16,7 @@ namespace AnkaninStalker
         public Setting SettingInstanse;
         public Thread th = null; // 本スレ取得スレッド
         public Thread th_h = null; // 避難所スレ取得スレッド
+        static readonly object syncObject = new object(); // 同期オブジェクト
 
         public Boolean boolStartFlag;
         public Boolean boolResExist;
@@ -25,6 +26,7 @@ namespace AnkaninStalker
         public int httptimersec = 0;
 
         public Int32 resnum = 0;
+        public Int32 resnum_h = 0;
         public Boolean boolThreadDup = false; //スレッド重複防止
         public Boolean boolThreadDup_h = false; //スレッド重複防止
 
@@ -102,6 +104,7 @@ namespace AnkaninStalker
         private void timer1_Tick(object sender, EventArgs e)
         {
 
+            // 本スレ
             if (this.httptimersec % 15 == 0 && !boolThreadDup)
             { 
             // データ取得処理
@@ -111,6 +114,7 @@ namespace AnkaninStalker
 
                 obj[0] = Const.BOARD_MAIN;
                 obj[1] = this.SettingInstanse.strThread; //スレURL
+                obj[2] = this.SettingInstanse.strID; //スレID
 
                 th =
                     new System.Threading.Thread(
@@ -119,7 +123,8 @@ namespace AnkaninStalker
                 th.Start(obj);
 
             }
-            if (this.httptimersec % 15 == 0 && !boolThreadDup_h)
+            // 避難所
+            if (this.httptimersec % 15 == 0 && !boolThreadDup_h) 
             {
                 // データ取得処理
                 boolThreadDup_h = true;
@@ -128,6 +133,7 @@ namespace AnkaninStalker
 
                 obj[0] = Const.BOARD_HAVEN;
                 obj[1] = this.SettingInstanse.strThread_haven; //スレURL
+                obj[2] = this.SettingInstanse.strID_haven; //スレID
 
                 th_h =
                     new System.Threading.Thread(
@@ -182,8 +188,11 @@ namespace AnkaninStalker
             object[] argsTmp = (object[])args;
             int bbsCode = (int)argsTmp[0]; // 本/避難所区分
             string strUrl = (string)argsTmp[1]; // スレURL
+            string strID = (string)argsTmp[2]; // スレID
             string strHi = "";
-            if (bbsCode == Const.BOARD_HAVEN) { strHi = "[避]"; }
+            if (bbsCode == Const.BOARD_HAVEN) { 
+                strHi = "[避]"; 
+            }
 
             try
             {
@@ -276,40 +285,55 @@ namespace AnkaninStalker
                 {
                     rescnt++;
                     string h = sr.ReadLine();
-                    if (rescnt <= this.resnum) { continue; }
+                    if (bbsCode == Const.BOARD_MAIN && rescnt <= this.resnum) { continue; }
+                    if (bbsCode == Const.BOARD_HAVEN && rescnt <= this.resnum_h) { continue; }
                     string[] stArrayData = h.Split(new string[] { "<>" }, StringSplitOptions.None);
-                    if (rescnt == 1)
+                    if (rescnt == 1 && bbsCode == Const.BOARD_HAVEN) // 本スレのみ
                     {
                         this.BeginInvoke(new Action<String>(delegate(String str) { this.threadnameupdate(stArrayData[indexThreadName]); }), new object[] { "" });
                         this.BeginInvoke(new Action<String>(delegate(String str) { this.idupdate(this.SettingInstanse.strID); }), new object[] { "" });
                     }
 
                     // 読み込んだレス番号を更新
-                    this.BeginInvoke(new Action<Int32>(delegate(Int32 i) { this.resnumupdate(rescnt); }), new object[] { 0 });
+                    switch (bbsCode)
+                    {
+                        case Const.BOARD_MAIN:
+                            this.BeginInvoke(new Action<Int32>(delegate(Int32 i) { this.resnumupdate(rescnt); }), new object[] { 0 });
+                            break;
+                        case Const.BOARD_HAVEN:
+                            this.BeginInvoke(new Action<Int32>(delegate(Int32 i) { this.resnumhupdate(rescnt); }), new object[] { 0 });
+                            break;
+                        default:
+                            // Invalid code;
+                            throw new Exception("Invalid board code.");
+                    }
+
                     string target = "";
                     if (bbstype == Const.BBS_2CH)
                     {
                         Match m = r5.Match(stArrayData[indexDate]);
                         if (!m.Success) { continue; }
                         string aid = m.Groups[7].Value;
-                        if (aid.Contains(this.SettingInstanse.strID))
+                        if (aid.Contains(strID))
                         {
                             // 経過時刻更新
                             DateTime d = DateTime.Parse(
                                 m.Groups[1].Value + "/" + m.Groups[2].Value + "/" + m.Groups[3].Value + " " +
                                 m.Groups[4].Value + ":" + m.Groups[5].Value + ":" + m.Groups[6].Value);
                             long tick = DateTime.Now.Ticks - d.Ticks;
-                            this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
-
+                            if (this.timersec > tick / 10000000)
+                            {
+                                this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
+                            }
                             string body = "";
                             string patternStr = @"<.*?>";
                             body = stArrayData[indexBody];
                             body = body.Replace("<br>", "\r\n");
-                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline); 
+                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline);
 
                             // レス更新
                             target = strHi + rescnt.ToString() + " " + stArrayData[indexDate] + "\r\n" + WebUtility.HtmlDecode(body);
-                            
+
                             news++;
                         }
                     }
@@ -318,38 +342,55 @@ namespace AnkaninStalker
                         Match m = r6.Match(stArrayData[indexDate]);
                         if (!m.Success) { continue; }
                         string aid = stArrayData[6];
-                        if (aid.Contains(this.SettingInstanse.strID))
+                        if (aid.Contains(strID))
                         {
                             // 経過時刻更新
                             DateTime d = DateTime.Parse(
                                 m.Groups[1].Value + "/" + m.Groups[2].Value + "/" + m.Groups[3].Value + " " +
                                 m.Groups[4].Value + ":" + m.Groups[5].Value + ":" + m.Groups[6].Value);
                             long tick = DateTime.Now.Ticks - d.Ticks;
-                            this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
-
+                            if (this.timersec > tick / 10000000)
+                            {
+                                this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
+                            }
                             string body = "";
                             string patternStr = @"<.*?>";
                             body = stArrayData[indexBody];
                             body = body.Replace("<br>", "\r\n");
-                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline); 
+                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline);
 
                             // レス更新
                             string name = (this.SettingInstanse.viewName) ? stArrayData[indexName] + " " : "";
                             string mail = (this.SettingInstanse.viewMail) ? "[" + stArrayData[indexMail] + "] " : "";
                             target = strHi + rescnt.ToString() + " " + name + mail + stArrayData[indexDate] + " ID:" + aid + "\r\n" + WebUtility.HtmlDecode(body);
-                            
+
                             news++;
                         }
 
-                        
+
                     }
 
                     if (target.Length != 0)
                     {
-                        this.BeginInvoke(new Action<String>(delegate(String str)
+                        // 排他制御入れる
+                        Monitor.Enter(syncObject);
+                        try
                         {
-                            this.resoutput(target);
-                        }), new object[] { "" });
+                            this.BeginInvoke(new Action<String>(delegate(String str)
+                                            {
+                                                this.resoutput(target);
+                                            }), new object[] { "" });
+                            Console.WriteLine(target);
+                        }
+                        catch (Exception ex)
+                        {
+                            // 何もしない
+                            Console.WriteLine(ex.GetType());
+                        }
+                        finally
+                        {
+                            Monitor.Exit(syncObject);
+                        }
                     }
 
                 }
@@ -365,7 +406,7 @@ namespace AnkaninStalker
                     // レス表示タブが非アクティブの時にレスが追加された場合
                     //if (this.tabControl1.SelectedIndex != Const.TAB_RES)
                     //{
-                        boolResAdded = true;
+                    boolResAdded = true;
                     //}
 
                     this.BeginInvoke(new Action(delegate()
@@ -383,12 +424,19 @@ namespace AnkaninStalker
                     this.resetthreaddup();
                 }), new object[] { });
             }
-            catch (InvalidOperationException ioex) { 
+            catch (InvalidOperationException ioex)
+            {
                 // 何もしない
                 Console.WriteLine(ioex.Message);
             }
+            catch (System.Threading.ThreadAbortException aex)
+            {
+                // 何もしない(スレッド強制終了時)
+                Console.WriteLine(aex.Message);
+            }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput("エラー:" + ex.Message); }), new object[] { "" });
             }
             finally { 
@@ -421,12 +469,25 @@ namespace AnkaninStalker
             this.textBox1.AppendText(str + "\r\n");
             this.textBox1.AppendText("------------------\r\n");
         }
-
-        // 読み込みレス番号更新
+        
+        /// <summary>
+        ///  読み込みレス番号更新
+        /// </summary>
+        /// <param name="i"></param>
         public delegate void ResnumupdateDelegate(Int32 i);
         public void resnumupdate(Int32 i)
         {
             this.resnum = i;
+        }
+
+        /// <summary>
+        ///  読み込みレス番号更新(避難所)
+        /// </summary>
+        /// <param name="i"></param>
+        public delegate void ResnumhupdateDelegate(Int32 i);
+        public void resnumhupdate(Int32 i)
+        {
+            this.resnum_h = i;
         }
 
         // 経過秒更新
@@ -500,12 +561,11 @@ namespace AnkaninStalker
             try
             {
                 this.timer1.Stop();
-                if (th != null) { th.Abort(); th = null; }
-                if (th_h != null) { th_h.Abort(); th_h = null; }
+                if (th != null) { th.Abort(); th.Join(); th = null; }
+                if (th_h != null) { th_h.Abort(); th_h.Join(); th_h = null; }
             }
             catch (Exception ex)
             {
-
                 this.label_error.Text = DateTime.Now.ToString() + " " + "エラー：" + ex.Message;
             }
             boolStartFlag = false;
@@ -516,6 +576,7 @@ namespace AnkaninStalker
             httptimersec = 0;
 
             resnum = 0;
+            resnum_h = 0;
             boolThreadDup = false;
             boolThreadDup_h = false;
 

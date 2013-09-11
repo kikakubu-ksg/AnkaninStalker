@@ -406,7 +406,13 @@ namespace AnkaninStalker
                     // レス表示タブが非アクティブの時にレスが追加された場合
                     //if (this.tabControl1.SelectedIndex != Const.TAB_RES)
                     //{
+                        //this.tabControl1.TabPages[Const.TAB_RES].BackColor = Color.Orange;
                     boolResAdded = true;
+                    this.BeginInvoke(new Action(delegate()
+                    {
+                        this.tabpagecolor();
+                    }), new object[] { });
+                        
                     //}
 
                     this.BeginInvoke(new Action(delegate()
@@ -516,6 +522,19 @@ namespace AnkaninStalker
             this.boolThreadDup = false;
             this.boolThreadDup_h = false;
         }
+
+        /// <summary>
+        /// タブ色変更メソッド
+        /// </summary>
+        public delegate void TabpagecolorDelegate();
+        public void tabpagecolor()
+        {
+            if (this.tabControl1.SelectedIndex != Const.TAB_RES)
+            {
+                this.tabControl1.Refresh();
+            }
+        }
+        
         
         private void buttonSwitch_Click(object sender, EventArgs e)
         {
@@ -590,6 +609,9 @@ namespace AnkaninStalker
 
             this.label_m2.Font = this.basefont;
             this.label_m2.ForeColor = Color.Black;
+
+            boolResAdded = false;
+            this.Refresh(); // 再描画
 
             this.label_error.Text = DateTime.Now.ToString() + " " + "リセット完了";
 
@@ -703,7 +725,8 @@ namespace AnkaninStalker
             drawTab(sender, e);
         }
 
-        public void drawTab(object sender, DrawItemEventArgs e){
+        public void drawTab(object sender, DrawItemEventArgs e)
+        {
             //対象のTabControlを取得
             TabControl tab = (TabControl)sender;
             //タブページのテキストを取得
@@ -715,13 +738,11 @@ namespace AnkaninStalker
             if (e.Index == Const.TAB_RES && boolResAdded)
             //if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                //選択されているタブのテキストを赤、背景を青とする
                 foreBrush = Brushes.Black;
                 backBrush = Brushes.Orange;
             }
             else
             {
-                //選択されていないタブのテキストは灰色、背景を白とする
                 foreBrush = Brushes.Black;
                 backBrush = Brushes.White;
             }
@@ -737,6 +758,11 @@ namespace AnkaninStalker
             //Textの描画
             e.Graphics.DrawString(txt, e.Font, foreBrush, e.Bounds, sf);
         }
+
+        private void tabPage1_Enter(object sender, EventArgs e)
+        {
+            this.boolResAdded = false;
+        }
     }
 }
 
@@ -746,7 +772,7 @@ namespace AnkaninStalker
 //　Ctrl+-で水平線（("------------------) OK
 //　Ctrl+Sで保存、Ctrl+Lでロード、Ctrl+UでWrap切り替え OK
 //・字幕
-//・複数スレッド監視
+//・複数スレッド監視 OK
 //・複数ID監視
 //・次スレ追跡
 //・効果音
@@ -758,4 +784,4 @@ namespace AnkaninStalker
 //・統計情報
 //・収納機能
 //・アンカー表示対応　フロートボックスで表示する⇒めんどいやめやめ OK
-//・安価人レス時にタブ開いてなかったら色つける（オレンジ）
+//・安価人レス時にタブ開いてなかったら色つける（オレンジ） OK

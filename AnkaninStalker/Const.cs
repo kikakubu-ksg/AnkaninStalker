@@ -16,5 +16,14 @@ namespace AnkaninStalker
 
         public const int BOARD_MAIN = 0; // 板区分-本スレ
         public const int BOARD_HAVEN = 1;// 板区分-避難所
+
+        internal static string NZ(string str)
+        {
+            if (str == null)
+            {
+                return "";
+            }
+            else { return str; }
+        }
     }
 }

@@ -7,9 +7,9 @@ AnkaninStalker
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kikakubu-ksg/ankaninstalker/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 What is this  
-おま指で安価人のレスだけ表示するためのツール
-安価人が最後にレスした時刻から何分経ったか表示できる機能付き
-今のところ２ｃｈとしたらばに対応。
+おま指で安価人のレスだけ表示するためのツール  
+安価人が最後にレスした時刻から何分経ったか表示できる機能付き  
+今のところ２ｃｈとしたらばに対応。 
 
 
 How to use  
@@ -22,7 +22,6 @@ How to use
 Issues  
 アンカー表記、HTMLエンコードの表記を直す。  
 //・字幕  
-//・複数スレッド監視  
 //・複数ID監視  
 //・次スレ追跡  
 //・効果音  

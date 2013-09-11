@@ -10,13 +10,20 @@ namespace AnkaninStalker
         private Form1 _parentForm;      //親フォーム
         private string _strThread;      //スレッドURL
         private string _strID;          //スレッドID
+        private string _strNameSpace;
+        private string _strMailSpace; 
         private string _strThread_haven; //スレッドURL（避難所）
         private string _strID_haven;     //スレッドID（避難所）
+        private string _strNameSpace_haven;
+        private string _strMailSpace_haven; 
         private int _intLimit1;
         private int _intLimit2;
         private bool _topMost;
         private bool _viewName;
         private bool _viewMail;
+        private bool _viewId;
+        private bool _viewDate;
+        private bool _viewNum;
         private string _strConfig;
 
         public Form1 parentForm
@@ -59,6 +66,34 @@ namespace AnkaninStalker
                 this.textBox_ID.Text = value;
             }
         }
+        public string strNameSpace
+        {
+            get
+            {
+
+                return _strNameSpace;
+
+            }
+            set
+            {
+                _strNameSpace = value;
+                this.textBox_NameSpace.Text = value;
+            }
+        }
+        public string strMailSpace
+        {
+            get
+            {
+
+                return _strMailSpace;
+
+            }
+            set
+            {
+                _strMailSpace = value;
+                this.textBox_MailSpace.Text = value;
+            }
+        }
         public string strThread_haven
         {
             get
@@ -85,6 +120,34 @@ namespace AnkaninStalker
             {
                 _strID_haven = value;
                 this.textBox_ID_haven.Text = value;
+            }
+        }
+        public string strNameSpace_haven
+        {
+            get
+            {
+
+                return _strNameSpace_haven;
+
+            }
+            set
+            {
+                _strNameSpace_haven = value;
+                this.textBox_NameSpace_haven.Text = value;
+            }
+        }
+        public string strMailSpace_haven
+        {
+            get
+            {
+
+                return _strMailSpace_haven;
+
+            }
+            set
+            {
+                _strMailSpace_haven = value;
+                this.textBox_MailSpace_haven.Text = value;
             }
         }
         public int intLimit1
@@ -157,6 +220,48 @@ namespace AnkaninStalker
                 this.checkBox_viewmail.Checked = value;
             }
         }
+        public bool viewId
+        {
+            get
+            {
+
+                return _viewId;
+
+            }
+            set
+            {
+                _viewId = value;
+                this.checkBox_viewid.Checked = value;
+            }
+        }
+        public bool viewDate
+        {
+            get
+            {
+
+                return _viewDate;
+
+            }
+            set
+            {
+                _viewDate = value;
+                this.checkBox_viewdate.Checked = value;
+            }
+        }
+        public bool viewNum
+        {
+            get
+            {
+
+                return _viewNum;
+
+            }
+            set
+            {
+                _viewNum = value;
+                this.checkBox_viewnum.Checked = value;
+            }
+        }
         public string strConfig
         {
             get
@@ -195,17 +300,26 @@ namespace AnkaninStalker
             // インスタンスに設定
             this._strThread = this.textBox_Thread.Text;
             this._strID = this.textBox_ID.Text;
+            this._strNameSpace = this.textBox_NameSpace.Text;
+            this._strMailSpace = this.textBox_MailSpace.Text;
             this._strThread_haven = this.textBox_Thread_haven.Text;
             this._strID_haven = this.textBox_ID_haven.Text;
+            this._strNameSpace_haven = this.textBox_NameSpace_haven.Text;
+            this._strMailSpace_haven = this.textBox_MailSpace_haven.Text;
             this._intLimit1 = int.Parse(this.textBox_Limit1.Text);
             this._intLimit2 = int.Parse(this.textBox_Limit2.Text);
             this._topMost = this.checkBox_topmost.Checked;
             this._viewName = this.checkBox_viewname.Checked;
             this._viewMail = this.checkBox_viewmail.Checked;
+            this._viewId = this.checkBox_viewid.Checked;
+            this._viewDate = this.checkBox_viewdate.Checked;
+            this._viewNum = this.checkBox_viewnum.Checked;
 
             // アプリケーションプロパティに設定
             Properties.Settings.Default.Thread = this.textBox_Thread.Text;
             Properties.Settings.Default.ID = this.textBox_ID.Text;
+            Properties.Settings.Default.NameSpace = this.textBox_NameSpace.Text;
+            Properties.Settings.Default.MailSpace = this.textBox_MailSpace.Text;
             Properties.Settings.Default.Thread_haven = this.textBox_Thread_haven.Text;
             Properties.Settings.Default.ID_haven = this.textBox_ID_haven.Text;
             Properties.Settings.Default.limit_1 = int.Parse(this.textBox_Limit1.Text);
@@ -213,6 +327,9 @@ namespace AnkaninStalker
             Properties.Settings.Default.topmost = this.checkBox_topmost.Checked;
             Properties.Settings.Default.view_name = this.checkBox_viewname.Checked;
             Properties.Settings.Default.view_mail = this.checkBox_viewmail.Checked;
+            Properties.Settings.Default.view_id = this.checkBox_viewid.Checked;
+            Properties.Settings.Default.view_date = this.checkBox_viewdate.Checked;
+            Properties.Settings.Default.view_num = this.checkBox_viewnum.Checked;
             Properties.Settings.Default.Save();
 
             // 最前面表示設定
@@ -263,6 +380,8 @@ namespace AnkaninStalker
         private void SetFromValueFromInstance() {
             this.textBox_Thread.Text = this._strThread;
             this.textBox_ID.Text = this._strID;
+            this.textBox_NameSpace.Text = this._strNameSpace;
+            this.textBox_MailSpace.Text = this._strMailSpace;
             this.textBox_Thread_haven.Text = this._strThread_haven;
             this.textBox_ID_haven.Text = this._strID_haven;
             this.textBox_Limit1.Text = this._intLimit1.ToString();
@@ -270,6 +389,9 @@ namespace AnkaninStalker
             this.checkBox_topmost.Checked = this._topMost;
             this.checkBox_viewname.Checked = this._viewName;
             this.checkBox_viewmail.Checked = this._viewMail;
+            this.checkBox_viewid.Checked = this._viewId;
+            this.checkBox_viewdate.Checked = this._viewDate;
+            this.checkBox_viewnum.Checked = this._viewNum;
         }
 
         private void textBox_Limit2_Validating(object sender, CancelEventArgs e)

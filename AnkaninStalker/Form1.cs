@@ -12,35 +12,39 @@ namespace AnkaninStalker
     public partial class Form1 : Form
     {
 
-        public Version VersionInstanse;
-        public Setting SettingInstanse;
-        public Thread th = null; // 本スレ取得スレッド
-        public Thread th_h = null; // 避難所スレ取得スレッド
+        public Version VersionInstanse; // バージョン情報フォーム
+        public Setting SettingInstanse; // 設定フォーム
+        public Thread th = null;    // 本スレ取得スレッド
+        public Thread th_h = null;  // 避難所スレ取得スレッド
         static readonly object syncObject = new object(); // 同期オブジェクト
 
-        public Boolean boolStartFlag;
-        public Boolean boolResExist;
-        public Int64 timersec = 0;
-        public Int64 basetime = 0;
-        public Int64 timerdiff = 0;
-        public int httptimersec = 0;
+        public Boolean boolStartFlag;   // 追跡開始フラグ
+        public Boolean boolResExist;    // レス存在フラグ
+        public Int64 timersec = 0;      // 経過時間
+        public Int64 basetime = 0;      // 基準時刻
+        public Int64 timerdiff = 0;     // タイマー差分
+        public int httptimersec = 0;    // データ取得処理クロック
 
-        public Int32 resnum = 0;
-        public Int32 resnum_h = 0;
+        public Int32 resnum = 0;        // 読み込み済みレス数
+        public Int32 resnum_h = 0;      // 読み込み済みレス数（避難所）
         public Boolean boolThreadDup = false; //スレッド重複防止
-        public Boolean boolThreadDup_h = false; //スレッド重複防止
+        public Boolean boolThreadDup_h = false; //スレッド重複防止（避難所）
 
         // タブ色用 
-        public Boolean boolResAdded = false;
+        public Boolean boolResAdded = false; // 新着フラグ
 
-        // default font
+        // default font（戻し用）
         public System.Drawing.Font basefont;
 
         public Form1()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             // フォーム作成
@@ -65,13 +69,20 @@ namespace AnkaninStalker
             // 設定値割り当て
             this.SettingInstanse.strThread = Properties.Settings.Default.Thread;
             this.SettingInstanse.strID = Properties.Settings.Default.ID;
+            this.SettingInstanse.strNameSpace = Properties.Settings.Default.NameSpace;
+            this.SettingInstanse.strMailSpace = Properties.Settings.Default.MailSpace;
             this.SettingInstanse.strThread_haven = Properties.Settings.Default.Thread_haven;
             this.SettingInstanse.strID_haven = Properties.Settings.Default.ID_haven;
+            this.SettingInstanse.strNameSpace_haven = Properties.Settings.Default.NameSpace_haven;
+            this.SettingInstanse.strMailSpace_haven = Properties.Settings.Default.MailSpace_haven;
             this.SettingInstanse.intLimit1 = Properties.Settings.Default.limit_1;
             this.SettingInstanse.intLimit2 = Properties.Settings.Default.limit_2;
             this.SettingInstanse.topMost = Properties.Settings.Default.topmost;
             this.SettingInstanse.viewName = Properties.Settings.Default.view_name;
             this.SettingInstanse.viewMail = Properties.Settings.Default.view_mail;
+            this.SettingInstanse.viewId = Properties.Settings.Default.view_id;
+            this.SettingInstanse.viewDate = Properties.Settings.Default.view_date;
+            this.SettingInstanse.viewNum = Properties.Settings.Default.view_num;
             this.richTextBox1.Text = Properties.Settings.Default.memo;
 
             // 開始フラグ
@@ -101,6 +112,11 @@ namespace AnkaninStalker
         {
             this.SettingInstanse.Show();
         }
+        /// <summary>
+        /// タイマーイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
 
@@ -115,6 +131,8 @@ namespace AnkaninStalker
                 obj[0] = Const.BOARD_MAIN;
                 obj[1] = this.SettingInstanse.strThread; //スレURL
                 obj[2] = this.SettingInstanse.strID; //スレID
+                obj[3] = this.SettingInstanse.strNameSpace; //スレ名前欄
+                obj[4] = this.SettingInstanse.strMailSpace; //スレメール欄
 
                 th =
                     new System.Threading.Thread(
@@ -134,6 +152,8 @@ namespace AnkaninStalker
                 obj[0] = Const.BOARD_HAVEN;
                 obj[1] = this.SettingInstanse.strThread_haven; //スレURL
                 obj[2] = this.SettingInstanse.strID_haven; //スレID
+                obj[3] = this.SettingInstanse.strNameSpace_haven; //スレ名前欄
+                obj[4] = this.SettingInstanse.strMailSpace_haven; //スレメール欄
 
                 th_h =
                     new System.Threading.Thread(
@@ -171,8 +191,9 @@ namespace AnkaninStalker
         }
 
         /// <summary>
-        /// 
+        /// スレ情報取得
         /// </summary>
+        /// <param name="args"></param>
         private void HttpThread(object args)
         {
             string host;
@@ -189,10 +210,16 @@ namespace AnkaninStalker
             int bbsCode = (int)argsTmp[0]; // 本/避難所区分
             string strUrl = (string)argsTmp[1]; // スレURL
             string strID = (string)argsTmp[2]; // スレID
+            string strNameSpace = (string)argsTmp[3]; // 
+            string strMailSpace = (string)argsTmp[4]; // 
             string strHi = "";
             if (bbsCode == Const.BOARD_HAVEN) { 
                 strHi = "[避]"; 
             }
+
+            strID = Const.NZ(strID);
+            strNameSpace = Const.NZ(strNameSpace);
+            strMailSpace = Const.NZ(strMailSpace);
 
             try
             {
@@ -314,35 +341,8 @@ namespace AnkaninStalker
                         Match m = r5.Match(stArrayData[indexDate]);
                         if (!m.Success) { continue; }
                         string aid = m.Groups[7].Value;
-                        if (aid.Contains(strID))
-                        {
-                            // 経過時刻更新
-                            DateTime d = DateTime.Parse(
-                                m.Groups[1].Value + "/" + m.Groups[2].Value + "/" + m.Groups[3].Value + " " +
-                                m.Groups[4].Value + ":" + m.Groups[5].Value + ":" + m.Groups[6].Value);
-                            long tick = DateTime.Now.Ticks - d.Ticks;
-                            if (this.timersec > tick / 10000000)
-                            {
-                                this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
-                            }
-                            string body = "";
-                            string patternStr = @"<.*?>";
-                            body = stArrayData[indexBody];
-                            body = body.Replace("<br>", "\r\n");
-                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline);
-
-                            // レス更新
-                            target = strHi + rescnt.ToString() + " " + stArrayData[indexDate] + "\r\n" + WebUtility.HtmlDecode(body);
-
-                            news++;
-                        }
-                    }
-                    else if (bbstype == Const.BBS_SHITARABA)
-                    {
-                        Match m = r6.Match(stArrayData[indexDate]);
-                        if (!m.Success) { continue; }
-                        string aid = stArrayData[6];
-                        if (aid.Contains(strID))
+                        // filter
+                        if (aid.Contains(strID) && stArrayData[indexName].Contains(strNameSpace) && stArrayData[indexMail].Contains(strMailSpace))
                         {
                             // 経過時刻更新
                             DateTime d = DateTime.Parse(
@@ -362,7 +362,53 @@ namespace AnkaninStalker
                             // レス更新
                             string name = (this.SettingInstanse.viewName) ? stArrayData[indexName] + " " : "";
                             string mail = (this.SettingInstanse.viewMail) ? "[" + stArrayData[indexMail] + "] " : "";
-                            target = strHi + rescnt.ToString() + " " + name + mail + stArrayData[indexDate] + " ID:" + aid + "\r\n" + WebUtility.HtmlDecode(body);
+                            string date = "";
+                            string id = "";
+                            string[] arrDate = stArrayData[indexDate].Split(' ');
+                            try
+                            {
+                                date = (this.SettingInstanse.viewDate) ? arrDate[0] + " " + arrDate[1] + " " : "";
+                            }catch(Exception){}
+                            try
+                            {
+                                id = (this.SettingInstanse.viewId) ? arrDate[2] + " " : "";
+                            }
+                            catch (Exception) { }
+                            string num = (this.SettingInstanse.viewNum) ? rescnt.ToString() + " " : "";
+                            target = strHi + num + name + mail + date + id + "\r\n" + WebUtility.HtmlDecode(body);
+
+                            news++;
+                        }
+                    }
+                    else if (bbstype == Const.BBS_SHITARABA)
+                    {
+                        Match m = r6.Match(stArrayData[indexDate]);
+                        if (!m.Success) { continue; }
+                        string aid = stArrayData[6];
+                        if (aid.Contains(strID) && stArrayData[indexName].Contains(strNameSpace) && stArrayData[indexMail].Contains(strMailSpace))
+                        {
+                            // 経過時刻更新
+                            DateTime d = DateTime.Parse(
+                                m.Groups[1].Value + "/" + m.Groups[2].Value + "/" + m.Groups[3].Value + " " +
+                                m.Groups[4].Value + ":" + m.Groups[5].Value + ":" + m.Groups[6].Value);
+                            long tick = DateTime.Now.Ticks - d.Ticks;
+                            if (this.timersec > tick / 10000000)
+                            {
+                                this.BeginInvoke(new Action<Int64>(delegate(Int64 i) { this.timersecupdate(tick / 10000000); }), new object[] { 0 });
+                            }
+                            string body = "";
+                            string patternStr = @"<.*?>";
+                            body = stArrayData[indexBody];
+                            body = body.Replace("<br>", "\r\n");
+                            body = Regex.Replace(body, patternStr, string.Empty, RegexOptions.Singleline);
+
+                            // レス更新
+                            string name = (this.SettingInstanse.viewName) ? stArrayData[indexName] + " " : "";
+                            string mail = (this.SettingInstanse.viewMail) ? "[" + stArrayData[indexMail] + "] " : "";
+                            string date = (this.SettingInstanse.viewDate) ? stArrayData[indexDate] + " " : "";
+                            string id = (this.SettingInstanse.viewId) ? "ID:" + aid + " " : "";
+                            string num = (this.SettingInstanse.viewNum) ? rescnt.ToString() + " " : "";
+                            target = strHi + num + name + mail + date + id + "\r\n" + WebUtility.HtmlDecode(body);
 
                             news++;
                         }
@@ -404,17 +450,12 @@ namespace AnkaninStalker
                     }), new object[] { false });
 
                     // レス表示タブが非アクティブの時にレスが追加された場合
-                    //if (this.tabControl1.SelectedIndex != Const.TAB_RES)
-                    //{
-                        //this.tabControl1.TabPages[Const.TAB_RES].BackColor = Color.Orange;
                     boolResAdded = true;
                     this.BeginInvoke(new Action(delegate()
                     {
                         this.tabpagecolor();
                     }), new object[] { });
                         
-                    //}
-
                     this.BeginInvoke(new Action(delegate()
                     {
                         this.resetbasetime();
@@ -539,16 +580,16 @@ namespace AnkaninStalker
         private void buttonSwitch_Click(object sender, EventArgs e)
         {
             // 別スレッドでデータ取得
-            if ("".CompareTo(this.SettingInstanse.strThread) == 0)
-            {
-                MessageBox.Show("スレッドURLが未入力です。");
-                return;
-            }
-            if ("".CompareTo(this.SettingInstanse.strID) == 0)
-            {
-                MessageBox.Show("安価人IDが未入力です。");
-                return;
-            }
+            //if ("".CompareTo(this.SettingInstanse.strThread) == 0)
+            //{
+            //    MessageBox.Show("スレッドURLが未入力です。");
+            //    return;
+            //}
+            //if ("".CompareTo(this.SettingInstanse.strID) == 0)
+            //{
+            //    MessageBox.Show("安価人IDが未入力です。");
+            //    return;
+            //}
 
             // start
             if (!boolStartFlag)

@@ -50,6 +50,19 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBox_ID_haven = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox_NameSpace = new System.Windows.Forms.TextBox();
+            this.textBox_MailSpace = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox_NameSpace_haven = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox_MailSpace_haven = new System.Windows.Forms.TextBox();
+            this.checkBox_viewdate = new System.Windows.Forms.CheckBox();
+            this.checkBox_viewid = new System.Windows.Forms.CheckBox();
+            this.checkBox_viewnum = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -73,15 +86,15 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(9, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 12);
+            this.label2.Size = new System.Drawing.Size(74, 12);
             this.label2.TabIndex = 2;
-            this.label2.Text = "安価人ID";
+            this.label2.Text = "安価人フィルタ";
             // 
             // textBox_ID
             // 
-            this.textBox_ID.Location = new System.Drawing.Point(7, 57);
+            this.textBox_ID.Location = new System.Drawing.Point(31, 57);
             this.textBox_ID.Name = "textBox_ID";
-            this.textBox_ID.Size = new System.Drawing.Size(153, 19);
+            this.textBox_ID.Size = new System.Drawing.Size(90, 19);
             this.textBox_ID.TabIndex = 3;
             // 
             // label3
@@ -138,7 +151,7 @@
             // 
             // button_Setting_OK
             // 
-            this.button_Setting_OK.Location = new System.Drawing.Point(259, 349);
+            this.button_Setting_OK.Location = new System.Drawing.Point(259, 367);
             this.button_Setting_OK.Name = "button_Setting_OK";
             this.button_Setting_OK.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_OK.TabIndex = 10;
@@ -148,7 +161,7 @@
             // 
             // button_Setting_CNS
             // 
-            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 349);
+            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 367);
             this.button_Setting_CNS.Name = "button_Setting_CNS";
             this.button_Setting_CNS.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_CNS.TabIndex = 11;
@@ -189,7 +202,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 288);
+            this.label7.Location = new System.Drawing.Point(7, 321);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(114, 12);
             this.label7.TabIndex = 15;
@@ -197,7 +210,7 @@
             // 
             // textBox_config
             // 
-            this.textBox_config.Location = new System.Drawing.Point(9, 304);
+            this.textBox_config.Location = new System.Drawing.Point(9, 337);
             this.textBox_config.Multiline = true;
             this.textBox_config.Name = "textBox_config";
             this.textBox_config.ReadOnly = true;
@@ -222,9 +235,9 @@
             // 
             // textBox_ID_haven
             // 
-            this.textBox_ID_haven.Location = new System.Drawing.Point(7, 131);
+            this.textBox_ID_haven.Location = new System.Drawing.Point(31, 131);
             this.textBox_ID_haven.Name = "textBox_ID_haven";
-            this.textBox_ID_haven.Size = new System.Drawing.Size(153, 19);
+            this.textBox_ID_haven.Size = new System.Drawing.Size(90, 19);
             this.textBox_ID_haven.TabIndex = 20;
             // 
             // label9
@@ -232,15 +245,140 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(9, 116);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(100, 12);
+            this.label9.Size = new System.Drawing.Size(122, 12);
             this.label9.TabIndex = 19;
-            this.label9.Text = "安価人ID（避難所）";
+            this.label9.Text = "安価人フィルタ（避難所）";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 60);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(16, 12);
+            this.label10.TabIndex = 21;
+            this.label10.Text = "ID";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 134);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(16, 12);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "ID";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(127, 60);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 12);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "名前欄";
+            // 
+            // textBox_NameSpace
+            // 
+            this.textBox_NameSpace.Location = new System.Drawing.Point(174, 57);
+            this.textBox_NameSpace.Name = "textBox_NameSpace";
+            this.textBox_NameSpace.Size = new System.Drawing.Size(90, 19);
+            this.textBox_NameSpace.TabIndex = 24;
+            // 
+            // textBox_MailSpace
+            // 
+            this.textBox_MailSpace.Location = new System.Drawing.Point(321, 57);
+            this.textBox_MailSpace.Name = "textBox_MailSpace";
+            this.textBox_MailSpace.Size = new System.Drawing.Size(90, 19);
+            this.textBox_MailSpace.TabIndex = 26;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(270, 60);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(45, 12);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "メール欄";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(270, 134);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 12);
+            this.label14.TabIndex = 29;
+            this.label14.Text = "メール欄";
+            // 
+            // textBox_NameSpace_haven
+            // 
+            this.textBox_NameSpace_haven.Location = new System.Drawing.Point(174, 131);
+            this.textBox_NameSpace_haven.Name = "textBox_NameSpace_haven";
+            this.textBox_NameSpace_haven.Size = new System.Drawing.Size(90, 19);
+            this.textBox_NameSpace_haven.TabIndex = 28;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(127, 134);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 12);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "名前欄";
+            // 
+            // textBox_MailSpace_haven
+            // 
+            this.textBox_MailSpace_haven.Location = new System.Drawing.Point(321, 131);
+            this.textBox_MailSpace_haven.Name = "textBox_MailSpace_haven";
+            this.textBox_MailSpace_haven.Size = new System.Drawing.Size(90, 19);
+            this.textBox_MailSpace_haven.TabIndex = 30;
+            // 
+            // checkBox_viewdate
+            // 
+            this.checkBox_viewdate.AutoSize = true;
+            this.checkBox_viewdate.Location = new System.Drawing.Point(235, 230);
+            this.checkBox_viewdate.Name = "checkBox_viewdate";
+            this.checkBox_viewdate.Size = new System.Drawing.Size(100, 16);
+            this.checkBox_viewdate.TabIndex = 31;
+            this.checkBox_viewdate.Text = "時刻を表示する";
+            this.checkBox_viewdate.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_viewid
+            // 
+            this.checkBox_viewid.AutoSize = true;
+            this.checkBox_viewid.Location = new System.Drawing.Point(235, 252);
+            this.checkBox_viewid.Name = "checkBox_viewid";
+            this.checkBox_viewid.Size = new System.Drawing.Size(87, 16);
+            this.checkBox_viewid.TabIndex = 32;
+            this.checkBox_viewid.Text = "IDを表示する";
+            this.checkBox_viewid.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_viewnum
+            // 
+            this.checkBox_viewnum.AutoSize = true;
+            this.checkBox_viewnum.Location = new System.Drawing.Point(235, 274);
+            this.checkBox_viewnum.Name = "checkBox_viewnum";
+            this.checkBox_viewnum.Size = new System.Drawing.Size(118, 16);
+            this.checkBox_viewnum.TabIndex = 33;
+            this.checkBox_viewnum.Text = "レス番号を表示する";
+            this.checkBox_viewnum.UseVisualStyleBackColor = true;
             // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 380);
+            this.ClientSize = new System.Drawing.Size(430, 402);
+            this.Controls.Add(this.checkBox_viewnum);
+            this.Controls.Add(this.checkBox_viewid);
+            this.Controls.Add(this.checkBox_viewdate);
+            this.Controls.Add(this.textBox_MailSpace_haven);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.textBox_NameSpace_haven);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.textBox_MailSpace);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.textBox_NameSpace);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox_ID_haven);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox_Thread_haven);
@@ -264,7 +402,6 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Setting";
-            this.Text = "設定";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Setting_FormClosing);
             this.Load += new System.EventHandler(this.Setting_Load);
             this.ResumeLayout(false);
@@ -295,5 +432,18 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox_ID_haven;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox_NameSpace;
+        private System.Windows.Forms.TextBox textBox_MailSpace;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox_NameSpace_haven;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox_MailSpace_haven;
+        private System.Windows.Forms.CheckBox checkBox_viewdate;
+        private System.Windows.Forms.CheckBox checkBox_viewid;
+        private System.Windows.Forms.CheckBox checkBox_viewnum;
     }
 }

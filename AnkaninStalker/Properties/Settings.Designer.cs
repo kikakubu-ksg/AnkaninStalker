@@ -142,5 +142,89 @@ namespace AnkaninStalker.Properties {
                 this["ID_haven"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool view_id {
+            get {
+                return ((bool)(this["view_id"]));
+            }
+            set {
+                this["view_id"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool view_num {
+            get {
+                return ((bool)(this["view_num"]));
+            }
+            set {
+                this["view_num"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool view_date {
+            get {
+                return ((bool)(this["view_date"]));
+            }
+            set {
+                this["view_date"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NameSpace {
+            get {
+                return ((string)(this["NameSpace"]));
+            }
+            set {
+                this["NameSpace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NameSpace_haven {
+            get {
+                return ((string)(this["NameSpace_haven"]));
+            }
+            set {
+                this["NameSpace_haven"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MailSpace {
+            get {
+                return ((string)(this["MailSpace"]));
+            }
+            set {
+                this["MailSpace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MailSpace_haven {
+            get {
+                return ((string)(this["MailSpace_haven"]));
+            }
+            set {
+                this["MailSpace_haven"] = value;
+            }
+        }
     }
 }

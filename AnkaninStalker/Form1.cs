@@ -6,6 +6,9 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Net;
 using System.Configuration;
+using SpeechLib;
+using System.Runtime.InteropServices;
+using System.Collections.Generic; //for ver11
 
 namespace AnkaninStalker
 {
@@ -14,8 +17,8 @@ namespace AnkaninStalker
 
         public Version VersionInstanse; // バージョン情報フォーム
         public Setting SettingInstanse; // 設定フォーム
-        public Thread th = null;    // 本スレ取得スレッド
-        public Thread th_h = null;  // 避難所スレ取得スレッド
+        public Thread th = null;        // 本スレ取得スレッド
+        public Thread th_h = null;      // 避難所スレ取得スレッド
         static readonly object syncObject = new object(); // 同期オブジェクト
 
         public Boolean boolStartFlag;   // 追跡開始フラグ
@@ -27,14 +30,20 @@ namespace AnkaninStalker
 
         public Int32 resnum = 0;        // 読み込み済みレス数
         public Int32 resnum_h = 0;      // 読み込み済みレス数（避難所）
-        public Boolean boolThreadDup = false; //スレッド重複防止
-        public Boolean boolThreadDup_h = false; //スレッド重複防止（避難所）
+        public Boolean boolThreadDup = false;    //スレッド重複防止
+        public Boolean boolThreadDup_h = false;  //スレッド重複防止（避難所）
 
         // タブ色用 
-        public Boolean boolResAdded = false; // 新着フラグ
+        public Boolean boolResAdded = false;     // 新着フラグ
 
         // default font（戻し用）
         public System.Drawing.Font basefont;
+
+        //合成音声ライブラリの読み込み
+        private SpeechLib.SpVoice VoiceSpeech = null;
+        public Boolean boolTalkable = false;    // 音声合成が使えるかどうか
+        private List<String> speechList = new List<String>();
+        private int speechNum = 0;
 
         public Form1()
         {
@@ -100,6 +109,40 @@ namespace AnkaninStalker
             this.basefont = this.label_m2.Font;
 
             timer1.Interval = 1000;
+
+            // talker http://d.hatena.ne.jp/rti7743/20111215/1323965483 からコピペ
+            //合成音声エンジンを初期化する.
+            try
+            {
+                this.VoiceSpeech = new SpeechLib.SpVoice();
+            }
+            catch (COMException)
+            {
+                throw new InvalidOperationException(
+                    "合成音声が利用できません。" + Environment.NewLine
+                    + "Microsoft Speech Platform - Runtime (Version 11) をインストールしてください。"
+                );
+            }
+            //合成音声エンジンで日本語を話す人を探す。(やらなくても動作はするけど、念のため)
+            //boolTalkable = false;
+            foreach (SpObjectToken voiceperson in this.VoiceSpeech.GetVoices())
+            {
+                string language = voiceperson.GetAttribute("Language");
+                if (language == "411")
+                {//日本語を話す人だ!
+                    this.VoiceSpeech.Voice = voiceperson; //君に読みあげて欲しい
+                    boolTalkable = true;
+                    break;
+                }
+            }
+            // event handler
+            this.VoiceSpeech.EventInterests = SpeechVoiceEvents.SVEEndInputStream; // 終了時イベントを発生させるようになる
+            this.VoiceSpeech.EndStream += new _ISpeechVoiceEvents_EndStreamEventHandler(VoiceSpeech_EndStream); // イベントハンドラ登録
+
+            //if (!hit)
+            //{
+            //    MessageBox.Show("日本語合成音声が利用できません。\r\n日本語合成音声 MSSpeech_TTS_ja-JP_Haruka をインストールしてください。\r\n");
+            //}
 
         }
 
@@ -375,7 +418,9 @@ namespace AnkaninStalker
                             }
                             catch (Exception) { }
                             string num = (this.SettingInstanse.viewNum) ? rescnt.ToString() + " " : "";
-                            target = strHi + num + name + mail + date + id + "\r\n" + WebUtility.HtmlDecode(body);
+                            body = WebUtility.HtmlDecode(body);
+                            target = strHi + num + name + mail + date + id + "\r\n" + body;
+                            speechList.Add(body);
 
                             news++;
                         }
@@ -408,7 +453,9 @@ namespace AnkaninStalker
                             string date = (this.SettingInstanse.viewDate) ? stArrayData[indexDate] + " " : "";
                             string id = (this.SettingInstanse.viewId) ? "ID:" + aid + " " : "";
                             string num = (this.SettingInstanse.viewNum) ? rescnt.ToString() + " " : "";
-                            target = strHi + num + name + mail + date + id + "\r\n" + WebUtility.HtmlDecode(body);
+                            body = WebUtility.HtmlDecode(body);
+                            target = strHi + num + name + mail + date + id + "\r\n" + body;
+                            speechList.Add(body);
 
                             news++;
                         }
@@ -804,6 +851,35 @@ namespace AnkaninStalker
         {
             this.boolResAdded = false;
         }
+        // 読み上げ実行
+        // 現在の読み上げ番号テキストを再生
+        private void startSpeech()
+        {
+            this.startSpeech(this.speechNum);
+        }
+        // 指定番の読み上げ番号テキストを再生
+        private void startSpeech(int num)
+        {
+            if (this.VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking)
+            { return; } //使用中
+            if (this.speechList.Count <= 0 || num > this.speechList.Count - 1) { return; } // なし
+            if (num > 0 && this.speechList[num] != null && this.speechList[num].Length > 0)
+            {
+                // 読み上げ
+                this.VoiceSpeech.Speak(this.speechList[num], SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML);
+                
+            }
+        }
+        // レス読み上げ終了時イベント
+        void VoiceSpeech_EndStream(int StreamNumber, object StreamPosition)
+        {
+            // skip時は何もしない
+
+            // 停止ボタン無効化
+
+            //次レス読み上げ開始
+            
+        }
     }
 }
 
@@ -818,11 +894,11 @@ namespace AnkaninStalker
 //・次スレ追跡
 //・効果音
 //・talk機能
-//・名前・メ欄ストーカー機能
+//・名前・メ欄ストーカー機能 OK
 //・安価人の冒険
 //・user.configファイルパス表示 OK
 //・更新時間のconfig化
-//・統計情報
+//・統計情報 
 //・収納機能
 //・アンカー表示対応　フロートボックスで表示する⇒めんどいやめやめ OK
 //・安価人レス時にタブ開いてなかったら色つける（オレンジ） OK

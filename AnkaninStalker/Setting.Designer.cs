@@ -63,6 +63,9 @@
             this.checkBox_viewdate = new System.Windows.Forms.CheckBox();
             this.checkBox_viewid = new System.Windows.Forms.CheckBox();
             this.checkBox_viewnum = new System.Windows.Forms.CheckBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.checkBox_talker = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -151,7 +154,7 @@
             // 
             // button_Setting_OK
             // 
-            this.button_Setting_OK.Location = new System.Drawing.Point(259, 367);
+            this.button_Setting_OK.Location = new System.Drawing.Point(259, 600);
             this.button_Setting_OK.Name = "button_Setting_OK";
             this.button_Setting_OK.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_OK.TabIndex = 10;
@@ -161,7 +164,7 @@
             // 
             // button_Setting_CNS
             // 
-            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 367);
+            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 600);
             this.button_Setting_CNS.Name = "button_Setting_CNS";
             this.button_Setting_CNS.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_CNS.TabIndex = 11;
@@ -202,7 +205,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 321);
+            this.label7.Location = new System.Drawing.Point(7, 554);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(114, 12);
             this.label7.TabIndex = 15;
@@ -210,7 +213,7 @@
             // 
             // textBox_config
             // 
-            this.textBox_config.Location = new System.Drawing.Point(9, 337);
+            this.textBox_config.Location = new System.Drawing.Point(9, 570);
             this.textBox_config.Multiline = true;
             this.textBox_config.Name = "textBox_config";
             this.textBox_config.ReadOnly = true;
@@ -361,11 +364,42 @@
             this.checkBox_viewnum.Text = "レス番号を表示する";
             this.checkBox_viewnum.UseVisualStyleBackColor = true;
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(7, 317);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(61, 12);
+            this.label16.TabIndex = 34;
+            this.label16.Text = "Talker設定";
+            // 
+            // checkBox_talker
+            // 
+            this.checkBox_talker.AutoSize = true;
+            this.checkBox_talker.Location = new System.Drawing.Point(23, 341);
+            this.checkBox_talker.Name = "checkBox_talker";
+            this.checkBox_talker.Size = new System.Drawing.Size(105, 16);
+            this.checkBox_talker.TabIndex = 35;
+            this.checkBox_talker.Text = "レスを読み上げる";
+            this.checkBox_talker.UseVisualStyleBackColor = true;
+            this.checkBox_talker.CheckedChanged += new System.EventHandler(this.checkBox_talker_CheckedChanged);
+            // 
+            // label17
+            // 
+            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label17.Location = new System.Drawing.Point(13, 303);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(405, 2);
+            this.label17.TabIndex = 36;
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 402);
+            this.ClientSize = new System.Drawing.Size(430, 633);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.checkBox_talker);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.checkBox_viewnum);
             this.Controls.Add(this.checkBox_viewid);
             this.Controls.Add(this.checkBox_viewdate);
@@ -402,8 +436,8 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Setting";
+            this.Text = "設定";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Setting_FormClosing);
-            this.Load += new System.EventHandler(this.Setting_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,5 +479,8 @@
         private System.Windows.Forms.CheckBox checkBox_viewdate;
         private System.Windows.Forms.CheckBox checkBox_viewid;
         private System.Windows.Forms.CheckBox checkBox_viewnum;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox checkBox_talker;
+        private System.Windows.Forms.Label label17;
     }
 }

@@ -25,6 +25,7 @@ namespace AnkaninStalker
         private bool _viewDate;
         private bool _viewNum;
         private string _strConfig;
+        private bool _talker;
 
         public Form1 parentForm
         {
@@ -276,15 +277,24 @@ namespace AnkaninStalker
                 this.textBox_config.Text = value;
             }
         }
+        public bool talker
+        {
+            get
+            {
+
+                return _talker;
+
+            }
+            set
+            {
+                _talker = value;
+                this.checkBox_talker.Checked = value;
+            }
+        }
 
         public Setting()
         {
             InitializeComponent();
-        }
-
-        private void Setting_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button_Setting_OK_Click(object sender, EventArgs e)
@@ -314,6 +324,7 @@ namespace AnkaninStalker
             this._viewId = this.checkBox_viewid.Checked;
             this._viewDate = this.checkBox_viewdate.Checked;
             this._viewNum = this.checkBox_viewnum.Checked;
+            this._talker = this.checkBox_talker.Checked;
 
             // アプリケーションプロパティに設定
             Properties.Settings.Default.Thread = this.textBox_Thread.Text;
@@ -330,6 +341,7 @@ namespace AnkaninStalker
             Properties.Settings.Default.view_id = this.checkBox_viewid.Checked;
             Properties.Settings.Default.view_date = this.checkBox_viewdate.Checked;
             Properties.Settings.Default.view_num = this.checkBox_viewnum.Checked;
+            Properties.Settings.Default.talker = this.checkBox_talker.Checked;
             Properties.Settings.Default.Save();
 
             // 最前面表示設定
@@ -392,6 +404,7 @@ namespace AnkaninStalker
             this.checkBox_viewid.Checked = this._viewId;
             this.checkBox_viewdate.Checked = this._viewDate;
             this.checkBox_viewnum.Checked = this._viewNum;
+            this.checkBox_talker.Checked = this._talker;
         }
 
         private void textBox_Limit2_Validating(object sender, CancelEventArgs e)
@@ -401,6 +414,18 @@ namespace AnkaninStalker
             {
                 MessageBox.Show("数字を入力してください。");
                 e.Cancel = true;
+            }
+        }
+
+        private void checkBox_talker_CheckedChanged(object sender, EventArgs e)
+        {
+            // チェックボックスオン時にtalker機能が使えなかったらメッセージ
+            if (checkBox_talker.Checked) {
+                if (!_parentForm.boolTalkable)
+                {
+                    MessageBox.Show("日本語合成音声が利用できません。\r\n日本語合成音声 MSSpeech_TTS_ja-JP_Haruka をインストールしてください。\r\n");
+                    checkBox_talker.Checked = false;
+                }
             }
         }
 

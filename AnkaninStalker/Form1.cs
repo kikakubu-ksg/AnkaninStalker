@@ -42,8 +42,10 @@ namespace AnkaninStalker
         //合成音声ライブラリの読み込み
         private SpeechLib.SpVoice VoiceSpeech = null;
         public Boolean boolTalkable = false;    // 音声合成が使えるかどうか
-        private List<String> speechList = new List<String>();
-        private int speechNum = 0;
+        private List<String> speechList = new List<String>(); // 読み上げリスト
+        private int speechNum = 0; // 読み上げ番号現在値
+        private Boolean boolSpeechPlayFlag = false; // 再生フラグ
+        private Boolean boolSkipFlag = false; // スキップフラグ スキップしたら立てる／Voice開始時に下げる
 
         public Form1()
         {
@@ -421,7 +423,7 @@ namespace AnkaninStalker
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             speechList.Add(body);
-
+                            startSpeech(); //読み上げ
                             news++;
                         }
                     }
@@ -456,7 +458,7 @@ namespace AnkaninStalker
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             speechList.Add(body);
-
+                            startSpeech(); //読み上げ
                             news++;
                         }
 
@@ -849,37 +851,58 @@ namespace AnkaninStalker
 
         private void tabPage1_Enter(object sender, EventArgs e)
         {
-            this.boolResAdded = false;
+            boolResAdded = false;
         }
         // 読み上げ実行
         // 現在の読み上げ番号テキストを再生
         private void startSpeech()
         {
-            this.startSpeech(this.speechNum);
+            startSpeech(speechNum);
         }
         // 指定番の読み上げ番号テキストを再生
         private void startSpeech(int num)
         {
-            if (this.VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking)
+            // 読み上げフラグが立っていない場合は何もしない
+            if (!this.SettingInstanse.talker || !boolSpeechPlayFlag) { return; }
+
+            if (VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking)
             { return; } //使用中
-            if (this.speechList.Count <= 0 || num > this.speechList.Count - 1) { return; } // なし
-            if (num > 0 && this.speechList[num] != null && this.speechList[num].Length > 0)
+            if (speechList.Count <= 0 || num > speechList.Count - 1) { return; } // なし
+            if (num > 0 && speechList[num] != null && speechList[num].Length > 0)
             {
                 // 読み上げ
-                this.VoiceSpeech.Speak(this.speechList[num], SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML);
+                boolSkipFlag = false; // フラグ戻す
+                speechNum = num; // 現在番号で上書き
+                VoiceSpeech.Speak(speechList[num], SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML);
                 
             }
         }
         // レス読み上げ終了時イベント
-        void VoiceSpeech_EndStream(int StreamNumber, object StreamPosition)
+        private void VoiceSpeech_EndStream(int StreamNumber, object StreamPosition)
         {
             // skip時は何もしない
-
-            // 停止ボタン無効化
+            if (boolSkipFlag) { return; }
 
             //次レス読み上げ開始
+            startSpeech(speechNum + 1);
             
         }
+        // 読み上げスキップ
+        private void skipSpeech() {
+            boolSkipFlag = true;
+            // ボタン無効化
+
+            VoiceSpeech.Skip("Sentence", int.MaxValue);
+            // 終わるまで待つ
+            if (VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking) {
+                VoiceSpeech.WaitUntilDone(1000);
+            }
+            // ボタン有効化
+        }
+
+        // talk用ボタン類の管理
+        private void disableTalkButtons() { }
+        private void enableTalkButtons() { }
     }
 }
 

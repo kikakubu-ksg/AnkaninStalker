@@ -438,7 +438,7 @@ namespace AnkaninStalker
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             this.BeginInvoke(new Action<String>(delegate(String str) { this.speechlistadd(body); }), new object[] { "" });
-                            this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
+                            this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax((speechList.Count - 1).ToString()); }), new object[] { "0" });
                             this.BeginInvoke(new Action(delegate() { this.startSpeech(); }), new object[] { }); // 読み上げ
                             news++;
                         }
@@ -474,7 +474,7 @@ namespace AnkaninStalker
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             this.BeginInvoke(new Action<String>(delegate(String str) { this.speechlistadd(body); }), new object[] { "" });
-                            this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
+                            this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax((speechList.Count - 1).ToString()); }), new object[] { "0" });
                             this.BeginInvoke(new Action(delegate(){this.startSpeech();}), new object[] { }); // 読み上げ
                             news++;
                         }
@@ -886,7 +886,7 @@ namespace AnkaninStalker
             if (VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking)
             { return; } //使用中
             if (speechList.Count <= 0 || num > speechList.Count - 1) { return; } // なし
-            if (num > 0 && speechList[num] != null && speechList[num].Length > 0)
+            if (num >= 0 && speechList[num] != null && speechList[num].Length > 0)
             {
                 // 読み上げ
                 boolSkipFlag = false; // フラグ戻す
@@ -968,7 +968,7 @@ namespace AnkaninStalker
         private void button_talker_first_Click(object sender, EventArgs e)
         {
             skipSpeech();
-            startSpeech(0);
+            startSpeech(1);
 
         }
         // 前レスボタン

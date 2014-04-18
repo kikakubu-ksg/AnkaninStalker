@@ -16,6 +16,11 @@ How to use
 要.net framework 4 Client Profile
 設定画面でスレURLと安価人ID(一部マッチング）を指定し、追跡開始ボタンを押して出力を開始する。  
 初回はスレの全レスを対象に表示、以降は新規取得したレスを表示する。  
+  
+読み上げ機能  
+Microsoft Speech Platformが必要です  
+ここでインストーラ落とすと楽です。  
+http://mahoro-ba.net/e1542.html　　
  
 
 

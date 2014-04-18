@@ -66,6 +66,19 @@
             this.label16 = new System.Windows.Forms.Label();
             this.checkBox_talker = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.trackBar_volume = new System.Windows.Forms.TrackBar();
+            this.trackBar_speed = new System.Windows.Forms.TrackBar();
+            this.trackBar_pitch = new System.Windows.Forms.TrackBar();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.textBox_volume = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.textBox_speed = new System.Windows.Forms.TextBox();
+            this.textBox_pitch = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volume)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_speed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_pitch)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -154,7 +167,7 @@
             // 
             // button_Setting_OK
             // 
-            this.button_Setting_OK.Location = new System.Drawing.Point(259, 600);
+            this.button_Setting_OK.Location = new System.Drawing.Point(259, 532);
             this.button_Setting_OK.Name = "button_Setting_OK";
             this.button_Setting_OK.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_OK.TabIndex = 10;
@@ -164,7 +177,7 @@
             // 
             // button_Setting_CNS
             // 
-            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 600);
+            this.button_Setting_CNS.Location = new System.Drawing.Point(343, 532);
             this.button_Setting_CNS.Name = "button_Setting_CNS";
             this.button_Setting_CNS.Size = new System.Drawing.Size(75, 23);
             this.button_Setting_CNS.TabIndex = 11;
@@ -205,7 +218,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 554);
+            this.label7.Location = new System.Drawing.Point(7, 486);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(114, 12);
             this.label7.TabIndex = 15;
@@ -213,7 +226,7 @@
             // 
             // textBox_config
             // 
-            this.textBox_config.Location = new System.Drawing.Point(9, 570);
+            this.textBox_config.Location = new System.Drawing.Point(9, 502);
             this.textBox_config.Multiline = true;
             this.textBox_config.Name = "textBox_config";
             this.textBox_config.ReadOnly = true;
@@ -369,9 +382,9 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(7, 317);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(61, 12);
+            this.label16.Size = new System.Drawing.Size(74, 12);
             this.label16.TabIndex = 34;
-            this.label16.Text = "Talker設定";
+            this.label16.Text = "読み上げ設定";
             // 
             // checkBox_talker
             // 
@@ -392,11 +405,114 @@
             this.label17.Size = new System.Drawing.Size(405, 2);
             this.label17.TabIndex = 36;
             // 
+            // trackBar_volume
+            // 
+            this.trackBar_volume.Location = new System.Drawing.Point(68, 363);
+            this.trackBar_volume.Maximum = 100;
+            this.trackBar_volume.Name = "trackBar_volume";
+            this.trackBar_volume.Size = new System.Drawing.Size(254, 45);
+            this.trackBar_volume.TabIndex = 37;
+            this.trackBar_volume.Value = 100;
+            this.trackBar_volume.ValueChanged += new System.EventHandler(this.trackBar_volume_ValueChanged);
+            // 
+            // trackBar_speed
+            // 
+            this.trackBar_speed.LargeChange = 1;
+            this.trackBar_speed.Location = new System.Drawing.Point(68, 398);
+            this.trackBar_speed.Minimum = -10;
+            this.trackBar_speed.Name = "trackBar_speed";
+            this.trackBar_speed.Size = new System.Drawing.Size(254, 45);
+            this.trackBar_speed.TabIndex = 38;
+            this.trackBar_speed.ValueChanged += new System.EventHandler(this.trackBar_speed_ValueChanged);
+            // 
+            // trackBar_pitch
+            // 
+            this.trackBar_pitch.LargeChange = 1;
+            this.trackBar_pitch.Location = new System.Drawing.Point(68, 433);
+            this.trackBar_pitch.Minimum = -10;
+            this.trackBar_pitch.Name = "trackBar_pitch";
+            this.trackBar_pitch.Size = new System.Drawing.Size(254, 45);
+            this.trackBar_pitch.TabIndex = 39;
+            this.trackBar_pitch.ValueChanged += new System.EventHandler(this.trackBar_pitch_ValueChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(14, 366);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(50, 12);
+            this.label18.TabIndex = 40;
+            this.label18.Text = "ボリューム";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(14, 403);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(42, 12);
+            this.label19.TabIndex = 41;
+            this.label19.Text = "スピード";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(14, 437);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(30, 12);
+            this.label20.TabIndex = 42;
+            this.label20.Text = "ピッチ";
+            // 
+            // textBox_volume
+            // 
+            this.textBox_volume.BackColor = System.Drawing.Color.LightGray;
+            this.textBox_volume.Enabled = false;
+            this.textBox_volume.Location = new System.Drawing.Point(328, 366);
+            this.textBox_volume.Name = "textBox_volume";
+            this.textBox_volume.Size = new System.Drawing.Size(51, 19);
+            this.textBox_volume.TabIndex = 43;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(385, 373);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(11, 12);
+            this.label21.TabIndex = 44;
+            this.label21.Text = "%";
+            // 
+            // textBox_speed
+            // 
+            this.textBox_speed.BackColor = System.Drawing.Color.LightGray;
+            this.textBox_speed.Enabled = false;
+            this.textBox_speed.Location = new System.Drawing.Point(328, 403);
+            this.textBox_speed.Name = "textBox_speed";
+            this.textBox_speed.Size = new System.Drawing.Size(51, 19);
+            this.textBox_speed.TabIndex = 45;
+            // 
+            // textBox_pitch
+            // 
+            this.textBox_pitch.BackColor = System.Drawing.Color.LightGray;
+            this.textBox_pitch.Enabled = false;
+            this.textBox_pitch.Location = new System.Drawing.Point(328, 437);
+            this.textBox_pitch.Name = "textBox_pitch";
+            this.textBox_pitch.Size = new System.Drawing.Size(51, 19);
+            this.textBox_pitch.TabIndex = 46;
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 633);
+            this.ClientSize = new System.Drawing.Size(430, 561);
+            this.Controls.Add(this.textBox_pitch);
+            this.Controls.Add(this.textBox_speed);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.textBox_volume);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.trackBar_pitch);
+            this.Controls.Add(this.trackBar_speed);
+            this.Controls.Add(this.trackBar_volume);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.checkBox_talker);
             this.Controls.Add(this.label16);
@@ -438,6 +554,9 @@
             this.Name = "Setting";
             this.Text = "設定";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Setting_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volume)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_speed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_pitch)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,5 +601,15 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.CheckBox checkBox_talker;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TrackBar trackBar_volume;
+        private System.Windows.Forms.TrackBar trackBar_speed;
+        private System.Windows.Forms.TrackBar trackBar_pitch;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox textBox_volume;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox textBox_speed;
+        private System.Windows.Forms.TextBox textBox_pitch;
     }
 }

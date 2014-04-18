@@ -483,6 +483,7 @@
             this.textBox_talker_num.Name = "textBox_talker_num";
             this.textBox_talker_num.Size = new System.Drawing.Size(39, 19);
             this.textBox_talker_num.TabIndex = 16;
+            this.textBox_talker_num.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_talker_num_KeyPress);
             // 
             // Form1
             // 

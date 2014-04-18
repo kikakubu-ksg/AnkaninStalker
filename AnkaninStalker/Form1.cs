@@ -96,6 +96,9 @@ namespace AnkaninStalker
             this.SettingInstanse.viewNum = Properties.Settings.Default.view_num;
             this.richTextBox1.Text = Properties.Settings.Default.memo;
             this.SettingInstanse.talker = Properties.Settings.Default.talker;
+            this.SettingInstanse.talkVolume = Properties.Settings.Default.talk_volume;
+            this.SettingInstanse.talkSpeed = Properties.Settings.Default.talk_speed;
+            this.SettingInstanse.talkPitch = Properties.Settings.Default.talk_pitch;
 
             // 開始フラグ
             boolStartFlag = false;
@@ -889,7 +892,14 @@ namespace AnkaninStalker
                 boolSkipFlag = false; // フラグ戻す
                 speechNum = num; // 現在番号で上書き
                 textBox_talker_num.Text = num.ToString();
-                VoiceSpeech.Speak(speechList[num], SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML);
+                // タグ入れ
+                string speechBody = "<volume level=\"" +
+                    this.SettingInstanse.talkVolume + "\"><rate absspeed=\"" +
+                    this.SettingInstanse.talkSpeed + "\"><pitch absmiddle=\""+
+                    this.SettingInstanse.talkPitch + "\">" +
+                    speechList[num] +
+                    "</volume></rate></pitch>";
+                VoiceSpeech.Speak(speechBody, SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML);
                 
             }
         }
@@ -1008,6 +1018,15 @@ namespace AnkaninStalker
         public void updateresmax(String str)
         {
             this.label_talker_max.Text = str;
+        }
+
+        private void textBox_talker_num_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //0～9と、バックスペース以外の時は、イベントをキャンセルする
+            if ((e.KeyChar < '0' || '9' < e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true;
+            }
         }
 
     }

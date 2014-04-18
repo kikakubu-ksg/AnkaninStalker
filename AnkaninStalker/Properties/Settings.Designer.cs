@@ -238,5 +238,41 @@ namespace AnkaninStalker.Properties {
                 this["talker"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int talk_volume {
+            get {
+                return ((int)(this["talk_volume"]));
+            }
+            set {
+                this["talk_volume"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int talk_speed {
+            get {
+                return ((int)(this["talk_speed"]));
+            }
+            set {
+                this["talk_speed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int talk_pitch {
+            get {
+                return ((int)(this["talk_pitch"]));
+            }
+            set {
+                this["talk_pitch"] = value;
+            }
+        }
     }
 }

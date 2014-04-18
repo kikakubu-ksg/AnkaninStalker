@@ -26,6 +26,9 @@ namespace AnkaninStalker
         private bool _viewNum;
         private string _strConfig;
         private bool _talker;
+        private int _talkVolulme;
+        private int _talkSpeed;
+        private int _talkPitch;
 
         public Form1 parentForm
         {
@@ -291,6 +294,51 @@ namespace AnkaninStalker
                 this.checkBox_talker.Checked = value;
             }
         }
+        public int talkVolume
+        {
+            get
+            {
+
+                return _talkVolulme;
+
+            }
+            set
+            {
+                _talkVolulme = value;
+                this.trackBar_volume.Value = value;
+                this.textBox_volume.Text = value.ToString();
+            }
+        }
+        public int talkSpeed
+        {
+            get
+            {
+
+                return _talkSpeed;
+
+            }
+            set
+            {
+                _talkSpeed = value;
+                this.trackBar_speed.Value = value;
+                this.textBox_speed.Text = value.ToString();
+            }
+        }
+        public int talkPitch
+        {
+            get
+            {
+
+                return _talkPitch;
+
+            }
+            set
+            {
+                _talkPitch = value;
+                this.trackBar_pitch.Value = value;
+                this.textBox_pitch.Text = value.ToString();
+            }
+        }
 
         public Setting()
         {
@@ -325,6 +373,9 @@ namespace AnkaninStalker
             this._viewDate = this.checkBox_viewdate.Checked;
             this._viewNum = this.checkBox_viewnum.Checked;
             this._talker = this.checkBox_talker.Checked;
+            this._talkVolulme = this.trackBar_volume.Value;
+            this._talkSpeed = this.trackBar_speed.Value;
+            this._talkPitch = this.trackBar_pitch.Value;
 
             // アプリケーションプロパティに設定
             Properties.Settings.Default.Thread = this.textBox_Thread.Text;
@@ -342,6 +393,9 @@ namespace AnkaninStalker
             Properties.Settings.Default.view_date = this.checkBox_viewdate.Checked;
             Properties.Settings.Default.view_num = this.checkBox_viewnum.Checked;
             Properties.Settings.Default.talker = this.checkBox_talker.Checked;
+            Properties.Settings.Default.talk_volume = this.trackBar_volume.Value;
+            Properties.Settings.Default.talk_speed = this.trackBar_speed.Value;
+            Properties.Settings.Default.talk_pitch = this.trackBar_pitch.Value;
             Properties.Settings.Default.Save();
 
             // 最前面表示設定
@@ -405,6 +459,12 @@ namespace AnkaninStalker
             this.checkBox_viewdate.Checked = this._viewDate;
             this.checkBox_viewnum.Checked = this._viewNum;
             this.checkBox_talker.Checked = this._talker;
+            this.trackBar_volume.Value = this._talkVolulme;
+            this.trackBar_speed.Value = this._talkSpeed;
+            this.trackBar_pitch.Value = this._talkPitch;
+            this.textBox_volume.Text = this._talkVolulme.ToString();
+            this.textBox_speed.Text = this._talkSpeed.ToString();
+            this.textBox_pitch.Text = this._talkPitch.ToString();
         }
 
         private void textBox_Limit2_Validating(object sender, CancelEventArgs e)
@@ -427,6 +487,21 @@ namespace AnkaninStalker
                     checkBox_talker.Checked = false;
                 }
             }
+        }
+
+        private void trackBar_volume_ValueChanged(object sender, EventArgs e)
+        {
+            this.textBox_volume.Text = this.trackBar_volume.Value.ToString();
+        }
+
+        private void trackBar_speed_ValueChanged(object sender, EventArgs e)
+        {
+            this.textBox_speed.Text = this.trackBar_speed.Value.ToString();
+        }
+
+        private void trackBar_pitch_ValueChanged(object sender, EventArgs e)
+        {
+            this.textBox_pitch.Text = this.trackBar_pitch.Value.ToString();
         }
 
     }

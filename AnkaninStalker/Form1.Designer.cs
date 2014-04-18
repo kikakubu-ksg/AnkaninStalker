@@ -57,12 +57,24 @@
             this.button_wrap = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button_talker_last = new System.Windows.Forms.Button();
+            this.button_talker_next = new System.Windows.Forms.Button();
+            this.button_talker_replay = new System.Windows.Forms.Button();
+            this.button_talker_prev = new System.Windows.Forms.Button();
+            this.button_talker_first = new System.Windows.Forms.Button();
+            this.button_talker_playctl = new System.Windows.Forms.Button();
+            this.groupBox_talker = new System.Windows.Forms.GroupBox();
+            this.button_talker_go = new System.Windows.Forms.Button();
+            this.label_talker_max = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox_talker_num = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel_info.SuspendLayout();
             this.panel_error.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox_talker.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -184,7 +196,7 @@
             this.textBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox1.Location = new System.Drawing.Point(3, 18);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(266, 115);
+            this.textBox1.Size = new System.Drawing.Size(266, 140);
             this.textBox1.TabIndex = 4;
             this.textBox1.Text = "";
             this.textBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textBox1_LinkClicked);
@@ -214,7 +226,7 @@
             // label_threadname
             // 
             this.label_threadname.AutoSize = true;
-            this.label_threadname.Location = new System.Drawing.Point(2, 163);
+            this.label_threadname.Location = new System.Drawing.Point(6, 301);
             this.label_threadname.Name = "label_threadname";
             this.label_threadname.Size = new System.Drawing.Size(51, 12);
             this.label_threadname.TabIndex = 8;
@@ -229,10 +241,10 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tabControl1.ItemSize = new System.Drawing.Size(60, 18);
-            this.tabControl1.Location = new System.Drawing.Point(1, 178);
+            this.tabControl1.Location = new System.Drawing.Point(1, 316);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(280, 162);
+            this.tabControl1.Size = new System.Drawing.Size(280, 187);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 9;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
@@ -246,7 +258,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(272, 136);
+            this.tabPage1.Size = new System.Drawing.Size(272, 161);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "安価人レス";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -264,7 +276,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(272, 136);
+            this.tabPage2.Size = new System.Drawing.Size(272, 161);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "メモ帳";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -356,11 +368,128 @@
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             // 
+            // button_talker_last
+            // 
+            this.button_talker_last.Location = new System.Drawing.Point(147, 18);
+            this.button_talker_last.Name = "button_talker_last";
+            this.button_talker_last.Size = new System.Drawing.Size(24, 24);
+            this.button_talker_last.TabIndex = 10;
+            this.button_talker_last.Text = "≫";
+            this.button_talker_last.UseVisualStyleBackColor = true;
+            this.button_talker_last.Click += new System.EventHandler(this.button_talker_last_Click);
+            // 
+            // button_talker_next
+            // 
+            this.button_talker_next.Location = new System.Drawing.Point(123, 18);
+            this.button_talker_next.Name = "button_talker_next";
+            this.button_talker_next.Size = new System.Drawing.Size(24, 24);
+            this.button_talker_next.TabIndex = 11;
+            this.button_talker_next.Text = ">";
+            this.button_talker_next.UseVisualStyleBackColor = true;
+            this.button_talker_next.Click += new System.EventHandler(this.button_talker_next_Click);
+            // 
+            // button_talker_replay
+            // 
+            this.button_talker_replay.Location = new System.Drawing.Point(99, 18);
+            this.button_talker_replay.Name = "button_talker_replay";
+            this.button_talker_replay.Size = new System.Drawing.Size(24, 24);
+            this.button_talker_replay.TabIndex = 12;
+            this.button_talker_replay.Text = "○";
+            this.button_talker_replay.UseVisualStyleBackColor = true;
+            this.button_talker_replay.Click += new System.EventHandler(this.button_talker_replay_Click);
+            // 
+            // button_talker_prev
+            // 
+            this.button_talker_prev.Location = new System.Drawing.Point(75, 18);
+            this.button_talker_prev.Name = "button_talker_prev";
+            this.button_talker_prev.Size = new System.Drawing.Size(24, 24);
+            this.button_talker_prev.TabIndex = 13;
+            this.button_talker_prev.Text = "<";
+            this.button_talker_prev.UseVisualStyleBackColor = true;
+            this.button_talker_prev.Click += new System.EventHandler(this.button_talker_prev_Click);
+            // 
+            // button_talker_first
+            // 
+            this.button_talker_first.Location = new System.Drawing.Point(51, 18);
+            this.button_talker_first.Name = "button_talker_first";
+            this.button_talker_first.Size = new System.Drawing.Size(24, 24);
+            this.button_talker_first.TabIndex = 14;
+            this.button_talker_first.Text = "≪";
+            this.button_talker_first.UseVisualStyleBackColor = true;
+            this.button_talker_first.Click += new System.EventHandler(this.button_talker_first_Click);
+            // 
+            // button_talker_playctl
+            // 
+            this.button_talker_playctl.Location = new System.Drawing.Point(7, 18);
+            this.button_talker_playctl.Name = "button_talker_playctl";
+            this.button_talker_playctl.Size = new System.Drawing.Size(41, 41);
+            this.button_talker_playctl.TabIndex = 15;
+            this.button_talker_playctl.Text = "再生";
+            this.button_talker_playctl.UseVisualStyleBackColor = true;
+            this.button_talker_playctl.Click += new System.EventHandler(this.button_talker_playctl_Click);
+            // 
+            // groupBox_talker
+            // 
+            this.groupBox_talker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox_talker.Controls.Add(this.button_talker_go);
+            this.groupBox_talker.Controls.Add(this.label_talker_max);
+            this.groupBox_talker.Controls.Add(this.label3);
+            this.groupBox_talker.Controls.Add(this.textBox_talker_num);
+            this.groupBox_talker.Controls.Add(this.button_talker_next);
+            this.groupBox_talker.Controls.Add(this.button_talker_playctl);
+            this.groupBox_talker.Controls.Add(this.button_talker_last);
+            this.groupBox_talker.Controls.Add(this.button_talker_first);
+            this.groupBox_talker.Controls.Add(this.button_talker_replay);
+            this.groupBox_talker.Controls.Add(this.button_talker_prev);
+            this.groupBox_talker.Location = new System.Drawing.Point(1, 158);
+            this.groupBox_talker.Name = "groupBox_talker";
+            this.groupBox_talker.Size = new System.Drawing.Size(280, 71);
+            this.groupBox_talker.TabIndex = 16;
+            this.groupBox_talker.TabStop = false;
+            this.groupBox_talker.Text = "読み上げ";
+            // 
+            // button_talker_go
+            // 
+            this.button_talker_go.Location = new System.Drawing.Point(177, 42);
+            this.button_talker_go.Name = "button_talker_go";
+            this.button_talker_go.Size = new System.Drawing.Size(42, 23);
+            this.button_talker_go.TabIndex = 19;
+            this.button_talker_go.Text = "GO";
+            this.button_talker_go.UseVisualStyleBackColor = true;
+            this.button_talker_go.Click += new System.EventHandler(this.button_talker_go_Click);
+            // 
+            // label_talker_max
+            // 
+            this.label_talker_max.AutoSize = true;
+            this.label_talker_max.Location = new System.Drawing.Point(107, 45);
+            this.label_talker_max.Name = "label_talker_max";
+            this.label_talker_max.Size = new System.Drawing.Size(11, 12);
+            this.label_talker_max.TabIndex = 18;
+            this.label_talker_max.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(93, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(11, 11);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "/";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBox_talker_num
+            // 
+            this.textBox_talker_num.Location = new System.Drawing.Point(51, 42);
+            this.textBox_talker_num.Name = "textBox_talker_num";
+            this.textBox_talker_num.Size = new System.Drawing.Size(39, 19);
+            this.textBox_talker_num.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 339);
+            this.ClientSize = new System.Drawing.Size(281, 502);
+            this.Controls.Add(this.groupBox_talker);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label_threadname);
             this.Controls.Add(this.panel_error);
@@ -383,6 +512,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox_talker.ResumeLayout(false);
+            this.groupBox_talker.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -417,6 +548,17 @@
         private System.Windows.Forms.Button button_line;
         private System.Windows.Forms.Label label_linenum;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button button_talker_last;
+        private System.Windows.Forms.Button button_talker_next;
+        private System.Windows.Forms.Button button_talker_replay;
+        private System.Windows.Forms.Button button_talker_prev;
+        private System.Windows.Forms.Button button_talker_first;
+        private System.Windows.Forms.Button button_talker_playctl;
+        private System.Windows.Forms.GroupBox groupBox_talker;
+        private System.Windows.Forms.Button button_talker_go;
+        private System.Windows.Forms.Label label_talker_max;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox_talker_num;
     }
 }
 

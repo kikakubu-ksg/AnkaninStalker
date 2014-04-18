@@ -95,6 +95,7 @@ namespace AnkaninStalker
             this.SettingInstanse.viewDate = Properties.Settings.Default.view_date;
             this.SettingInstanse.viewNum = Properties.Settings.Default.view_num;
             this.richTextBox1.Text = Properties.Settings.Default.memo;
+            this.SettingInstanse.talker = Properties.Settings.Default.talker;
 
             // 開始フラグ
             boolStartFlag = false;
@@ -112,6 +113,13 @@ namespace AnkaninStalker
 
             timer1.Interval = 1000;
 
+            if (this.SettingInstanse.talker) {
+                initVoiceSpeech();
+            }
+
+        }
+        private bool initVoiceSpeech() 
+        {
             // talker http://d.hatena.ne.jp/rti7743/20111215/1323965483 からコピペ
             //合成音声エンジンを初期化する.
             try
@@ -120,32 +128,36 @@ namespace AnkaninStalker
             }
             catch (COMException)
             {
-                throw new InvalidOperationException(
+                MessageBox.Show(
                     "合成音声が利用できません。" + Environment.NewLine
                     + "Microsoft Speech Platform - Runtime (Version 11) をインストールしてください。"
                 );
+                return false;
             }
             //合成音声エンジンで日本語を話す人を探す。(やらなくても動作はするけど、念のため)
-            //boolTalkable = false;
+            Boolean hit = false;
             foreach (SpObjectToken voiceperson in this.VoiceSpeech.GetVoices())
             {
                 string language = voiceperson.GetAttribute("Language");
                 if (language == "411")
                 {//日本語を話す人だ!
                     this.VoiceSpeech.Voice = voiceperson; //君に読みあげて欲しい
-                    boolTalkable = true;
+                    hit = true;
                     break;
                 }
             }
+            if (!hit)
+            {
+                MessageBox.Show("日本語合成音声が利用できません。\r\n日本語合成音声 MSSpeech_TTS_ja-JP_Haruka をインストールしてください。\r\n");
+                this.VoiceSpeech = null;
+                return false;
+            }
+            boolTalkable = true;
             // event handler
             this.VoiceSpeech.EventInterests = SpeechVoiceEvents.SVEEndInputStream; // 終了時イベントを発生させるようになる
             this.VoiceSpeech.EndStream += new _ISpeechVoiceEvents_EndStreamEventHandler(VoiceSpeech_EndStream); // イベントハンドラ登録
-
-            //if (!hit)
-            //{
-            //    MessageBox.Show("日本語合成音声が利用できません。\r\n日本語合成音声 MSSpeech_TTS_ja-JP_Haruka をインストールしてください。\r\n");
-            //}
-
+            return true;
+            
         }
 
         private void バージョン情報ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -423,7 +435,8 @@ namespace AnkaninStalker
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             speechList.Add(body);
-                            startSpeech(); //読み上げ
+                            this.BeginInvoke(new Action(delegate() { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
+                            this.BeginInvoke(new Action(delegate() { this.startSpeech(); }), new object[] { }); // 読み上げ
                             news++;
                         }
                     }
@@ -458,7 +471,8 @@ namespace AnkaninStalker
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             speechList.Add(body);
-                            startSpeech(); //読み上げ
+                            this.BeginInvoke(new Action(delegate() { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
+                            this.BeginInvoke(new Action(delegate(){this.startSpeech();}), new object[] { }); // 読み上げ
                             news++;
                         }
 
@@ -628,18 +642,6 @@ namespace AnkaninStalker
         
         private void buttonSwitch_Click(object sender, EventArgs e)
         {
-            // 別スレッドでデータ取得
-            //if ("".CompareTo(this.SettingInstanse.strThread) == 0)
-            //{
-            //    MessageBox.Show("スレッドURLが未入力です。");
-            //    return;
-            //}
-            //if ("".CompareTo(this.SettingInstanse.strID) == 0)
-            //{
-            //    MessageBox.Show("安価人IDが未入力です。");
-            //    return;
-            //}
-
             // start
             if (!boolStartFlag)
             {
@@ -651,7 +653,6 @@ namespace AnkaninStalker
                 if (this.basetime != 0) {
                     this.timerdiff = (DateTime.Now.Ticks - basetime) / 10000000;
                 }
-
             }
             else { 
                 //timer
@@ -699,6 +700,17 @@ namespace AnkaninStalker
 
             this.label_m2.Font = this.basefont;
             this.label_m2.ForeColor = Color.Black;
+
+            // talker
+            skipSpeech();
+            boolSpeechPlayFlag = false;
+            boolSkipFlag = false;
+            button_talker_playctl.Text = "再生";
+            disableTalkButtons();
+            speechNum = 0;
+            textBox_talker_num.Text = "";
+            label_talker_max.Text = "0";
+            speechList.Clear();
 
             boolResAdded = false;
             this.Refresh(); // 再描画
@@ -855,7 +867,8 @@ namespace AnkaninStalker
         }
         // 読み上げ実行
         // 現在の読み上げ番号テキストを再生
-        private void startSpeech()
+        public delegate void StartSpeechDelegate();
+        public void startSpeech()
         {
             startSpeech(speechNum);
         }
@@ -863,8 +876,10 @@ namespace AnkaninStalker
         private void startSpeech(int num)
         {
             // 読み上げフラグが立っていない場合は何もしない
-            if (!this.SettingInstanse.talker || !boolSpeechPlayFlag) { return; }
-
+            if (!this.SettingInstanse.talker || !boolTalkable || !boolSpeechPlayFlag ) { return; }
+            if (this.VoiceSpeech == null) {
+                if (!initVoiceSpeech()) { return; }
+            }
             if (VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking)
             { return; } //使用中
             if (speechList.Count <= 0 || num > speechList.Count - 1) { return; } // なし
@@ -873,6 +888,7 @@ namespace AnkaninStalker
                 // 読み上げ
                 boolSkipFlag = false; // フラグ戻す
                 speechNum = num; // 現在番号で上書き
+                textBox_talker_num.Text = num.ToString();
                 VoiceSpeech.Speak(speechList[num], SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFIsXML);
                 
             }
@@ -889,20 +905,111 @@ namespace AnkaninStalker
         }
         // 読み上げスキップ
         private void skipSpeech() {
+            if (!this.SettingInstanse.talker || !boolTalkable || VoiceSpeech == null) { return; }
             boolSkipFlag = true;
-            // ボタン無効化
 
-            VoiceSpeech.Skip("Sentence", int.MaxValue);
             // 終わるまで待つ
             if (VoiceSpeech.Status.RunningState == SpeechRunState.SRSEIsSpeaking) {
+                VoiceSpeech.Skip("Sentence", int.MaxValue); 
                 VoiceSpeech.WaitUntilDone(1000);
             }
-            // ボタン有効化
+
         }
 
         // talk用ボタン類の管理
-        private void disableTalkButtons() { }
-        private void enableTalkButtons() { }
+        private void disableTalkButtons() {
+            button_talker_first.Enabled = false;
+            button_talker_prev.Enabled = false;
+            button_talker_replay.Enabled = false;
+            button_talker_next.Enabled = false;
+            button_talker_last.Enabled = false;
+            button_talker_prev.Enabled = false;
+            button_talker_go.Enabled = false;
+            textBox_talker_num.Enabled = false;
+
+        }
+        private void enableTalkButtons() {
+            button_talker_first.Enabled = true;
+            button_talker_prev.Enabled = true;
+            button_talker_replay.Enabled = true;
+            button_talker_next.Enabled = true;
+            button_talker_last.Enabled = true;
+            button_talker_prev.Enabled = true;
+            button_talker_go.Enabled = true;
+            textBox_talker_num.Enabled = true;
+        }
+        // 再生コントロールボタン
+        private void button_talker_playctl_Click(object sender, EventArgs e)
+        {
+            if (!boolSpeechPlayFlag) // 再生
+            {
+                boolSpeechPlayFlag = true;
+                button_talker_playctl.Text = "停止";
+                enableTalkButtons();
+            }
+            else { // 停止
+                skipSpeech();
+                boolSpeechPlayFlag = false;
+                button_talker_playctl.Text = "再生";
+                disableTalkButtons();
+            }
+        }
+        // 先頭ボタン
+        private void button_talker_first_Click(object sender, EventArgs e)
+        {
+            skipSpeech();
+            startSpeech(0);
+
+        }
+        // 前レスボタン
+        private void button_talker_prev_Click(object sender, EventArgs e)
+        {
+            skipSpeech();
+            if (speechNum - 1 < 0) { logoutput("データがありません。"); }
+            else { startSpeech(speechNum - 1); }
+        }
+        // リプレイボタン
+        private void button_talker_replay_Click(object sender, EventArgs e)
+        {
+            skipSpeech();
+            startSpeech(speechNum);
+        }
+        // 次レスボタン
+        private void button_talker_next_Click(object sender, EventArgs e)
+        {
+            skipSpeech();
+            if (speechNum + 1 > speechList.Count - 1) { logoutput("データがありません。"); }
+            else { startSpeech(speechNum + 1); }
+        }
+        // 最終レスボタン
+        private void button_talker_last_Click(object sender, EventArgs e)
+        {
+            skipSpeech();
+            if (speechList.Count <= 0) { logoutput("データがありません。"); }
+            else { startSpeech(speechList.Count - 1); }
+        }
+        // レス移動ボタン
+        private void button_talker_go_Click(object sender, EventArgs e)
+        {
+            int n = 0;
+            try
+            {
+                n = int.Parse(textBox_talker_num.Text);
+            }
+            catch (Exception)
+            {
+                // 何もしない
+            }
+            if (n < 0 || speechList.Count - 1 < n ) { logoutput("データがありません。"); }
+            else { startSpeech(n); }
+        }
+        // res最大値更新
+        public delegate void updateResMaxDelegate(String str);
+        public void updateresmax(String str)
+        {
+            this.label_talker_max.Text = str;
+        }
+
     }
 }
 

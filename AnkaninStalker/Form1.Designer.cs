@@ -196,7 +196,7 @@
             this.textBox1.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox1.Location = new System.Drawing.Point(3, 18);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(266, 140);
+            this.textBox1.Size = new System.Drawing.Size(266, 129);
             this.textBox1.TabIndex = 4;
             this.textBox1.Text = "";
             this.textBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textBox1_LinkClicked);
@@ -226,7 +226,7 @@
             // label_threadname
             // 
             this.label_threadname.AutoSize = true;
-            this.label_threadname.Location = new System.Drawing.Point(6, 301);
+            this.label_threadname.Location = new System.Drawing.Point(3, 232);
             this.label_threadname.Name = "label_threadname";
             this.label_threadname.Size = new System.Drawing.Size(51, 12);
             this.label_threadname.TabIndex = 8;
@@ -241,10 +241,10 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tabControl1.ItemSize = new System.Drawing.Size(60, 18);
-            this.tabControl1.Location = new System.Drawing.Point(1, 316);
+            this.tabControl1.Location = new System.Drawing.Point(1, 247);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(280, 187);
+            this.tabControl1.Size = new System.Drawing.Size(280, 176);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 9;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
@@ -258,7 +258,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(272, 161);
+            this.tabPage1.Size = new System.Drawing.Size(272, 150);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "安価人レス";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -489,7 +489,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 502);
+            this.ClientSize = new System.Drawing.Size(281, 422);
             this.Controls.Add(this.groupBox_talker);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label_threadname);

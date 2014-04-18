@@ -477,18 +477,6 @@ namespace AnkaninStalker
             }
         }
 
-        private void checkBox_talker_CheckedChanged(object sender, EventArgs e)
-        {
-            // チェックボックスオン時にtalker機能が使えなかったらメッセージ
-            if (checkBox_talker.Checked) {
-                if (!_parentForm.boolTalkable)
-                {
-                    MessageBox.Show("日本語合成音声が利用できません。\r\n日本語合成音声 MSSpeech_TTS_ja-JP_Haruka をインストールしてください。\r\n");
-                    checkBox_talker.Checked = false;
-                }
-            }
-        }
-
         private void trackBar_volume_ValueChanged(object sender, EventArgs e)
         {
             this.textBox_volume.Text = this.trackBar_volume.Value.ToString();

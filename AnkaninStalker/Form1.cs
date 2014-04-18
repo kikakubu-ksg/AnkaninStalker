@@ -437,8 +437,8 @@ namespace AnkaninStalker
                             string num = (this.SettingInstanse.viewNum) ? rescnt.ToString() + " " : "";
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
-                            speechList.Add(body);
-                            this.BeginInvoke(new Action(delegate() { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
+                            this.BeginInvoke(new Action<String>(delegate(String str) { this.speechlistadd(body); }), new object[] { "" });
+                            this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
                             this.BeginInvoke(new Action(delegate() { this.startSpeech(); }), new object[] { }); // 読み上げ
                             news++;
                         }
@@ -473,8 +473,8 @@ namespace AnkaninStalker
                             string num = (this.SettingInstanse.viewNum) ? rescnt.ToString() + " " : "";
                             body = WebUtility.HtmlDecode(body);
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
-                            speechList.Add(body);
-                            this.BeginInvoke(new Action(delegate() { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
+                            this.BeginInvoke(new Action<String>(delegate(String str) { this.speechlistadd(body); }), new object[] { "" });
+                            this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax(speechList.Count.ToString()); }), new object[] { "0" });
                             this.BeginInvoke(new Action(delegate(){this.startSpeech();}), new object[] { }); // 読み上げ
                             news++;
                         }
@@ -1019,7 +1019,12 @@ namespace AnkaninStalker
         {
             this.label_talker_max.Text = str;
         }
-
+        // listAdd
+        public delegate void speechListAddDelegate(String str);
+        public void speechlistadd(String str)
+        {
+            this.speechList.Add(str);
+        }
         private void textBox_talker_num_KeyPress(object sender, KeyPressEventArgs e)
         {
             //0～9と、バックスペース以外の時は、イベントをキャンセルする

@@ -395,7 +395,6 @@
             this.checkBox_talker.TabIndex = 35;
             this.checkBox_talker.Text = "レスを読み上げる";
             this.checkBox_talker.UseVisualStyleBackColor = true;
-            this.checkBox_talker.CheckedChanged += new System.EventHandler(this.checkBox_talker_CheckedChanged);
             // 
             // label17
             // 

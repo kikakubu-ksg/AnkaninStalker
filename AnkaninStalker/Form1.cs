@@ -287,12 +287,16 @@ namespace AnkaninStalker
                 Console.WriteLine(strUrl);
                 //Regexオブジェクトを作成
                 Regex r1 = new Regex(@"2ch\.net");
-                Regex r2 = new Regex(@"jbbs\.livedoor\.jp");
+                Regex r2 = new Regex(@"jbbs\.shitaraba\.net");
                 Regex r3 = new Regex(@"http:\/\/([^:\/]*).*read\.cgi\/([^\/]*)\/([0-9]*)\/?");
                 Regex r4 = new Regex(@"http:\/\/([^:\/]*).*read\.cgi\/([^\/]*)\/([0-9]*)\/([0-9]*)\/?");
                 Regex r5 = new Regex(@"(\d{4})\/(\d{2})\/(\d{2})\(.*\) (\d{2}):(\d{2}):(\d{2})\.\d{2} ID:(.*)");
                 Regex r6 = new Regex(@"(\d{4})\/(\d{2})\/(\d{2})\(.*\) (\d{2}):(\d{2}):(\d{2})");
 
+                if ("".Equals(strUrl))
+                {
+                    return;
+                }
                 if (r1.Match(strUrl).Success)
                 {
                     bbstype = Const.BBS_2CH;
@@ -334,7 +338,7 @@ namespace AnkaninStalker
                     string bbs = m.Groups[2].Value;
                     string key1 = m.Groups[3].Value;
                     string key2 = m.Groups[4].Value;
-                    strGet = @"http://jbbs.livedoor.jp/bbs/rawmode.cgi/" + bbs + "/" + key1 + "/" + key2 + "/";
+                    strGet = @"http://jbbs.shitaraba.net/bbs/rawmode.cgi/" + bbs + "/" + key1 + "/" + key2 + "/";
                     Console.WriteLine(strGet);
 
                     enc = Encoding.GetEncoding("euc-jp");
@@ -439,7 +443,7 @@ namespace AnkaninStalker
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             this.BeginInvoke(new Action<String>(delegate(String str) { this.speechlistadd(body); }), new object[] { "" });
                             this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax((speechList.Count - 1).ToString()); }), new object[] { "0" });
-                            this.BeginInvoke(new Action(delegate() { this.startSpeech(); }), new object[] { }); // 読み上げ
+                            this.BeginInvoke(new Action(delegate() { this.startSpeech(speechNum+1); }), new object[] { }); // 読み上げ
                             news++;
                         }
                     }
@@ -475,7 +479,7 @@ namespace AnkaninStalker
                             target = strHi + num + name + mail + date + id + "\r\n" + body;
                             this.BeginInvoke(new Action<String>(delegate(String str) { this.speechlistadd(body); }), new object[] { "" });
                             this.BeginInvoke(new Action<String>(delegate(String str) { this.updateresmax((speechList.Count - 1).ToString()); }), new object[] { "0" });
-                            this.BeginInvoke(new Action(delegate(){this.startSpeech();}), new object[] { }); // 読み上げ
+                            this.BeginInvoke(new Action(delegate() { this.startSpeech(speechNum + 1); }), new object[] { }); // 読み上げ
                             news++;
                         }
 
@@ -525,6 +529,12 @@ namespace AnkaninStalker
                     this.BeginInvoke(new Action(delegate()
                     {
                         this.resetbasetime();
+                    }), new object[] { });
+
+                    //オートスクロール
+                    this.BeginInvoke(new Action(delegate()
+                    {
+                        this.autoscroll();
                     }), new object[] { });
                 }
 
@@ -581,6 +591,15 @@ namespace AnkaninStalker
         {
             this.textBox1.AppendText(str + "\r\n");
             this.textBox1.AppendText("------------------\r\n");
+        }
+
+        //末尾までスクロール
+        public delegate void autoscrollDelegate();
+        public void autoscroll()
+        {
+            this.textBox1.SelectionStart = textBox1.Text.Length;
+            this.textBox1.Focus();
+            this.textBox1.ScrollToCaret();
         }
         
         /// <summary>
@@ -1033,6 +1052,7 @@ namespace AnkaninStalker
                 e.Handled = true;
             }
         }
+       
 
     }
 }

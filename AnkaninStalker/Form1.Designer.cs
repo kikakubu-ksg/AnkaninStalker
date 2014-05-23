@@ -68,6 +68,8 @@
             this.label_talker_max = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_talker_num = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label_level = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel_info.SuspendLayout();
             this.panel_error.SuspendLayout();
@@ -251,6 +253,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label_level);
+            this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.label_ID);
             this.tabPage1.Controls.Add(this.textBox1);
@@ -276,7 +280,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(272, 161);
+            this.tabPage2.Size = new System.Drawing.Size(272, 150);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "メモ帳";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -485,6 +489,25 @@
             this.textBox_talker_num.TabIndex = 16;
             this.textBox_talker_num.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_talker_num_KeyPress);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(210, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(23, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Lv：";
+            // 
+            // label_level
+            // 
+            this.label_level.AutoSize = true;
+            this.label_level.Location = new System.Drawing.Point(239, 3);
+            this.label_level.Name = "label_level";
+            this.label_level.Size = new System.Drawing.Size(11, 12);
+            this.label_level.TabIndex = 9;
+            this.label_level.Text = "0";
+            this.label_level.DoubleClick += new System.EventHandler(this.label_level_DoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -560,6 +583,8 @@
         private System.Windows.Forms.Label label_talker_max;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox_talker_num;
+        private System.Windows.Forms.Label label_level;
+        private System.Windows.Forms.Label label4;
     }
 }
 

@@ -274,5 +274,17 @@ namespace AnkaninStalker.Properties {
                 this["talk_pitch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int reloadtime {
+            get {
+                return ((int)(this["reloadtime"]));
+            }
+            set {
+                this["reloadtime"] = value;
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace AnkaninStalker
         private int _talkVolulme;
         private int _talkSpeed;
         private int _talkPitch;
+        private int _reloadtime;
 
         public Form1 parentForm
         {
@@ -339,6 +340,20 @@ namespace AnkaninStalker
                 this.textBox_pitch.Text = value.ToString();
             }
         }
+        public int reloadtime
+        {
+            get
+            {
+
+                return _reloadtime;
+
+            }
+            set
+            {
+                _reloadtime = value;
+                this.numericUpDown1.Value = value;
+            }
+        }
 
         public Setting()
         {
@@ -376,6 +391,7 @@ namespace AnkaninStalker
             this._talkVolulme = this.trackBar_volume.Value;
             this._talkSpeed = this.trackBar_speed.Value;
             this._talkPitch = this.trackBar_pitch.Value;
+            this._reloadtime = (int)this.numericUpDown1.Value;
 
             // アプリケーションプロパティに設定
             Properties.Settings.Default.Thread = this.textBox_Thread.Text;
@@ -396,6 +412,7 @@ namespace AnkaninStalker
             Properties.Settings.Default.talk_volume = this.trackBar_volume.Value;
             Properties.Settings.Default.talk_speed = this.trackBar_speed.Value;
             Properties.Settings.Default.talk_pitch = this.trackBar_pitch.Value;
+            Properties.Settings.Default.reloadtime = (int)this.numericUpDown1.Value;
             Properties.Settings.Default.Save();
 
             // 最前面表示設定
@@ -465,6 +482,7 @@ namespace AnkaninStalker
             this.textBox_volume.Text = this._talkVolulme.ToString();
             this.textBox_speed.Text = this._talkSpeed.ToString();
             this.textBox_pitch.Text = this._talkPitch.ToString();
+            this.numericUpDown1.Value = this._reloadtime;
         }
 
         private void textBox_Limit2_Validating(object sender, CancelEventArgs e)
@@ -490,6 +508,12 @@ namespace AnkaninStalker
         private void trackBar_pitch_ValueChanged(object sender, EventArgs e)
         {
             this.textBox_pitch.Text = this.trackBar_pitch.Value.ToString();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            NumericUpDown obj = (NumericUpDown)sender;
+            if (obj.Value < 5) { obj.Value = 5; }
         }
 
     }

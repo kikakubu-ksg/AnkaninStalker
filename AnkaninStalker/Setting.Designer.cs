@@ -76,9 +76,13 @@
             this.label21 = new System.Windows.Forms.Label();
             this.textBox_speed = new System.Windows.Forms.TextBox();
             this.textBox_pitch = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label23 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_volume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_speed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_pitch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -497,11 +501,45 @@
             this.textBox_pitch.Size = new System.Drawing.Size(51, 19);
             this.textBox_pitch.TabIndex = 46;
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(11, 244);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(53, 12);
+            this.label22.TabIndex = 47;
+            this.label22.Text = "更新間隔";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(23, 260);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(47, 19);
+            this.numericUpDown1.TabIndex = 48;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(78, 260);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(17, 12);
+            this.label23.TabIndex = 49;
+            this.label23.Text = "秒";
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 561);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.label22);
             this.Controls.Add(this.textBox_pitch);
             this.Controls.Add(this.textBox_speed);
             this.Controls.Add(this.label21);
@@ -556,6 +594,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_volume)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_speed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_pitch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -610,5 +649,8 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox textBox_speed;
         private System.Windows.Forms.TextBox textBox_pitch;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label23;
     }
 }

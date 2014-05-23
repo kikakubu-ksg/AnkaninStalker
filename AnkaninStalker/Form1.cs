@@ -33,6 +33,8 @@ namespace AnkaninStalker
         public Boolean boolThreadDup = false;    //スレッド重複防止
         public Boolean boolThreadDup_h = false;  //スレッド重複防止（避難所）
 
+        public int exp = 0; //経験値
+
         // タブ色用 
         public Boolean boolResAdded = false;     // 新着フラグ
 
@@ -181,7 +183,7 @@ namespace AnkaninStalker
         {
 
             // 本スレ
-            if (this.httptimersec % 15 == 0 && !boolThreadDup)
+            if (this.httptimersec % this.SettingInstanse.reloadtime == 0 && !boolThreadDup)
             { 
             // データ取得処理
                 boolThreadDup = true;
@@ -202,7 +204,7 @@ namespace AnkaninStalker
 
             }
             // 避難所
-            if (this.httptimersec % 15 == 0 && !boolThreadDup_h) 
+            if (this.httptimersec % this.SettingInstanse.reloadtime == 0 && !boolThreadDup_h) 
             {
                 // データ取得処理
                 boolThreadDup_h = true;
@@ -542,6 +544,7 @@ namespace AnkaninStalker
                 //webres.Close()でもよい
                 sr.Close();
                 this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput(news.ToString() + "件の安価人レス取得"); }), new object[] { "" });
+                this.BeginInvoke(new Action<String>(delegate(String str) { this.addexp(news); }), new object[] { 0 });
                 this.BeginInvoke(new Action(delegate()
                 {
                     this.resetthreaddup();
@@ -1050,6 +1053,30 @@ namespace AnkaninStalker
             if ((e.KeyChar < '0' || '9' < e.KeyChar) && e.KeyChar != '\b')
             {
                 e.Handled = true;
+            }
+        }
+        private void addexp(int i)
+        {
+            this.exp += i;
+            int level = (1 + (1 + 8 * this.exp) ^ (1 / 2)) / 2;
+            if (level > int.Parse(this.label_level.Text))
+            {
+                this.textBox1.AppendText("安価人のレベルが上がった！\r\n");
+            }
+            this.label_level.Text = level.ToString();
+        }
+
+        private void label_level_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("レベルを初期化しますか？",
+    "レベルリセット",
+    MessageBoxButtons.YesNo,
+    MessageBoxIcon.Exclamation,
+    MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes)
+            {
+                this.exp = 0;
+                this.label_level.Text = "0";
             }
         }
        

@@ -101,6 +101,7 @@ namespace AnkaninStalker
             this.SettingInstanse.talkVolume = Properties.Settings.Default.talk_volume;
             this.SettingInstanse.talkSpeed = Properties.Settings.Default.talk_speed;
             this.SettingInstanse.talkPitch = Properties.Settings.Default.talk_pitch;
+            this.SettingInstanse.reloadtime = Properties.Settings.Default.reloadtime;
 
             // 開始フラグ
             boolStartFlag = false;
@@ -182,6 +183,7 @@ namespace AnkaninStalker
         private void timer1_Tick(object sender, EventArgs e)
         {
 
+            if (this.SettingInstanse.reloadtime <= 0) this.SettingInstanse.reloadtime = 15;
             // 本スレ
             if (this.httptimersec % this.SettingInstanse.reloadtime == 0 && !boolThreadDup)
             { 
@@ -544,7 +546,7 @@ namespace AnkaninStalker
                 //webres.Close()でもよい
                 sr.Close();
                 this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput(news.ToString() + "件の安価人レス取得"); }), new object[] { "" });
-                this.BeginInvoke(new Action<String>(delegate(String str) { this.addexp(news); }), new object[] { 0 });
+                this.BeginInvoke(new Action<int>(delegate(int i) { this.addexp(news); }), new object[] { 0 });
                 this.BeginInvoke(new Action(delegate()
                 {
                     this.resetthreaddup();
@@ -1058,7 +1060,7 @@ namespace AnkaninStalker
         private void addexp(int i)
         {
             this.exp += i;
-            int level = (1 + (1 + 8 * this.exp) ^ (1 / 2)) / 2;
+            int level = (int)(1 + Math.Sqrt(1 + 8 * this.exp)) / 2;
             if (level > int.Parse(this.label_level.Text))
             {
                 this.textBox1.AppendText("安価人のレベルが上がった！\r\n");

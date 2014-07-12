@@ -297,6 +297,8 @@ namespace AnkaninStalker
                 Regex r5 = new Regex(@"(\d{4})\/(\d{2})\/(\d{2})\(.*\) (\d{2}):(\d{2}):(\d{2})\.\d{2} ID:(.*)");
                 Regex r6 = new Regex(@"(\d{4})\/(\d{2})\/(\d{2})\(.*\) (\d{2}):(\d{2}):(\d{2})");
 
+                Boolean isFile = false;
+
                 if ("".Equals(strUrl))
                 {
                     return;
@@ -348,30 +350,52 @@ namespace AnkaninStalker
                     enc = Encoding.GetEncoding("euc-jp");
 
                 }
+                else if (System.IO.File.Exists(strUrl)) //datファイル指定の場合 2chに限る
+                {
+                    isFile = true;
+                    bbstype = Const.BBS_2CH;
+                    indexThreadName = 4;
+                    indexDate = 2;
+                    indexBody = 3;
+                    indexName = 0;
+                    indexMail = 1;
+
+                }
                 else
                 {
                     this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput("スレッドURLが不正です。"); }), new object[] { "" });
                     return;
                 }
 
-                // サーバーソケット初期化
-                this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput("データを取得します。"); }), new object[] { "" });
-                //HttpWebRequestの作成
-                System.Net.HttpWebRequest webreq =
-                    (System.Net.HttpWebRequest)
-                        System.Net.WebRequest.Create(strGet);
+                System.IO.Stream st;
+                System.IO.StreamReader sr;
+                if (!isFile)
+                {
 
-                webreq.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                webreq.Proxy = null;
+                    // サーバーソケット初期化
+                    this.BeginInvoke(new Action<String>(delegate(String str) { this.logoutput("データを取得します。"); }), new object[] { "" });
+                    //HttpWebRequestの作成
+                    System.Net.HttpWebRequest webreq =
+                        (System.Net.HttpWebRequest)
+                            System.Net.WebRequest.Create(strGet);
 
-                //サーバーからの応答を受信するためのHttpWebResponseを取得
-                System.Net.HttpWebResponse webres =
-                    (System.Net.HttpWebResponse)webreq.GetResponse();
+                    webreq.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                    webreq.Proxy = null;
 
-                //System.Text.Encoding.GetEncoding("euc-jp");
-                //応答データを受信するためのStreamを取得
-                System.IO.Stream st = webres.GetResponseStream();
-                System.IO.StreamReader sr = new System.IO.StreamReader(st, enc);
+                    //サーバーからの応答を受信するためのHttpWebResponseを取得
+                    System.Net.HttpWebResponse webres =
+                        (System.Net.HttpWebResponse)webreq.GetResponse();
+
+                    //System.Text.Encoding.GetEncoding("euc-jp");
+                    //応答データを受信するためのStreamを取得
+                    st = webres.GetResponseStream();
+                    sr = new System.IO.StreamReader(st, enc);
+
+                }
+                else
+                {
+                    sr = new System.IO.StreamReader( strUrl, System.Text.Encoding.GetEncoding("shift_jis"));
+                }
 
                 // 一行ずつパース
                 Int32 rescnt = 0;
